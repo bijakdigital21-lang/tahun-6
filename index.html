@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bijak Math tahun 6</title>
+    <title>Bijak Math tahun 6 / Smart Math grade 6</title>
     <!-- Tailwind CSS untuk Rekabentuk Moden & Responsif -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts - Nunito (Mudah dibaca & Mesra Kanak-kanak) -->
@@ -40,7 +40,7 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-start overflow-x-hidden antialiased text-slate-800">
 
-    <!-- APP CONTAINER -->
+    <!-- APP CONTAINER - Ditukar kepada h-auto untuk membolehkan skrol keseluruhan halaman -->
     <div class="max-w-md w-full mx-auto bg-white/80 backdrop-blur-md min-h-screen h-auto shadow-2xl flex flex-col relative pb-6 border-x border-white/40">
         
         <!-- HEADER / STATUS BAR -->
@@ -64,6 +64,9 @@
                 </div>
                 <!-- Butang Kawalan -->
                 <div class="flex items-center space-x-2">
+                    <button onclick="toggleLanguage()" class="btn-bounce bg-white/20 hover:bg-white/30 font-black text-xs px-2.5 py-1.5 rounded-xl border border-white/30 cursor-pointer" id="btnLangToggle" title="Tukar Bahasa / Change Language">
+                        🌐 EN
+                    </button>
                     <button onclick="openSettings()" class="btn-bounce text-xl p-1 focus:outline-none cursor-pointer" title="Tetapan">
                         ⚙️
                     </button>
@@ -79,6 +82,11 @@
 
             <!-- 1. PAPARAN PERMULAAN -->
             <section id="viewWelcome" class="flex flex-col items-center text-center space-y-8 py-8">
+                <div class="relative w-full flex justify-end px-2 -mt-4">
+                    <button onclick="toggleLanguage()" class="btn-bounce bg-blue-500 text-white font-black text-xs px-3 py-1.5 rounded-xl border-b-2 border-blue-700 cursor-pointer shadow-md" id="btnWelcomeLangToggle">
+                        🌐 EN
+                    </button>
+                </div>
                 <div class="space-y-2">
                     <div class="text-7xl drop-shadow-md animate-bounce inline-block">✏️🔢</div>
                     <h1 class="text-4xl font-extrabold text-blue-600 tracking-wide drop-shadow" id="welcomeTitle">Bijak Math<br><span class="text-emerald-500 text-3xl">tahun 6</span></h1>
@@ -127,7 +135,7 @@
                     </button>
                 </div>
                 
-                <!-- Grid Kad Topik -->
+                <!-- Grid Kad Topik - Sekatan max-h dan overflow telah dibuang supaya seluruh halaman boleh diskrol -->
                 <div id="topicsGrid" class="grid grid-cols-2 gap-4 p-1"></div>
 
                 <!-- Bahagian Pencapaian / Lencana -->
@@ -190,15 +198,15 @@
                     <div class="text-5xl font-black text-blue-500" id="resultScore">100%</div>
                     <div class="grid grid-cols-3 gap-2 text-center border-t border-slate-100 pt-4">
                         <div class="bg-green-50 p-2 rounded-xl">
-                            <div class="text-[10px] font-bold text-green-600">Betul</div>
+                            <div class="text-[10px] font-bold text-green-600" id="resLblCorrect">Betul</div>
                             <div class="text-lg font-black text-green-700" id="resultCorrect">0</div>
                         </div>
                         <div class="bg-red-50 p-2 rounded-xl">
-                            <div class="text-[10px] font-bold text-red-600">Salah</div>
+                            <div class="text-[10px] font-bold text-red-600" id="resLblWrong">Salah</div>
                             <div class="text-lg font-black text-red-700" id="resultWrong">0</div>
                         </div>
                         <div class="bg-yellow-50 p-2 rounded-xl">
-                            <div class="text-[10px] font-bold text-yellow-600">Bintang</div>
+                            <div class="text-[10px] font-bold text-yellow-600" id="resLblStars">Bintang</div>
                             <div class="text-lg font-black text-yellow-700" id="resultStars">0</div>
                         </div>
                     </div>
@@ -218,17 +226,17 @@
             <section id="viewRecords" class="hidden flex flex-col space-y-4">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h2 class="text-2xl font-black text-slate-700">📊 Rekod Prestasi</h2>
-                        <p class="text-slate-500 text-xs">Senarai markah kuiz yang telah dijawab</p>
+                        <h2 class="text-2xl font-black text-slate-700" id="recordsTitle">📊 Rekod Prestasi</h2>
+                        <p class="text-slate-500 text-xs" id="recordsDesc">Senarai markah kuiz yang telah dijawab</p>
                     </div>
-                    <button onclick="clearPerformanceRecords()" class="btn-bounce text-xs bg-red-50 text-red-600 font-bold py-1.5 px-2.5 rounded-lg border border-red-200 cursor-pointer">
+                    <button onclick="clearPerformanceRecords()" class="btn-bounce text-xs bg-red-50 text-red-600 font-bold py-1.5 px-2.5 rounded-lg border border-red-200 cursor-pointer" id="btnClearRecords">
                         🗑️ Padam Rekod
                     </button>
                 </div>
 
                 <div id="recordsListContainer" class="bg-white rounded-2xl p-4 shadow-inner border border-slate-100 max-h-[380px] overflow-y-auto space-y-3"></div>
 
-                <button onclick="navigateTo('viewMainMenu')" class="btn-bounce w-full bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl border-b-4 border-slate-400 cursor-pointer mt-2 text-center">
+                <button onclick="navigateTo('viewMainMenu')" class="btn-bounce w-full bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl border-b-4 border-slate-400 cursor-pointer mt-2 text-center" id="btnRecordsMainMenu">
                     🏠 Kembali ke Menu Utama
                 </button>
             </section>
@@ -239,27 +247,27 @@
         <div id="modalSettings" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-5">
             <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6 space-y-6 transform transition-all scale-100">
                 <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <h3 class="text-xl font-black text-slate-700 flex items-center gap-2">⚙️ Tetapan</h3>
+                    <h3 class="text-xl font-black text-slate-700 flex items-center gap-2" id="settingsTitle">⚙️ Tetapan</h3>
                     <button onclick="closeSettings()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold focus:outline-none cursor-pointer">&times;</button>
                 </div>
 
                 <div class="space-y-4">
                     <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl">
-                        <span class="font-bold text-slate-600">🔔 Kesan Bunyi</span>
+                        <span class="font-bold text-slate-600" id="settingsSound">🔔 Kesan Bunyi</span>
                         <button id="btnSoundToggle" onclick="toggleSound()" class="px-4 py-2 bg-green-500 text-white font-bold rounded-lg text-xs tracking-wide uppercase shadow btn-bounce cursor-pointer">HIDUP</button>
                     </div>
                     <button onclick="resetProgress()" class="w-full text-left bg-orange-50 hover:bg-orange-100 text-orange-700 font-bold p-3 rounded-xl text-sm flex items-center justify-between btn-bounce cursor-pointer">
-                        <span>🔄 Set Semula Kemajuan Kuiz</span>
+                        <span id="settingsReset">🔄 Set Semula Kemajuan Kuiz</span>
                         <span>➔</span>
                     </button>
                     <button onclick="logoutProfile()" class="w-full text-left bg-red-50 hover:bg-red-100 text-red-700 font-bold p-3 rounded-xl text-sm flex items-center justify-between btn-bounce cursor-pointer">
-                        <span>🚪 Log Keluar Akaun</span>
+                        <span id="settingsDelete">🚪 Log Keluar Akaun</span>
                         <span>➔</span>
                     </button>
                 </div>
 
-                <div class="bg-slate-100 p-3 rounded-xl text-center text-[11px] text-slate-400 leading-relaxed">
-                    <span class="font-bold text-slate-500">Bijak Math v3.0</span><br>
+                <div class="bg-slate-100 p-3 rounded-xl text-center text-[11px] text-slate-400 leading-relaxed" id="settingsBranding">
+                    <span class="font-bold text-slate-500">Bijak Math v2.0</span><br>
                     Silibus KSSR Matematik tahun 6 Kementerian Pendidikan Malaysia.<br>
                     100% Fungsi Offline & Selamat Tanpa Iklan.
                 </div>
@@ -267,388 +275,500 @@
         </div>
 
         <!-- FOOTER BRANDING -->
-        <footer class="text-center text-[10px] text-slate-400/80 font-bold uppercase tracking-wider pb-2">
+        <footer class="text-center text-[10px] text-slate-400/80 font-bold uppercase tracking-wider pb-2" id="footerText">
             Bijak Math tahun 6 • KSSR Malaysia
         </footer>
     </div>
 
     <!-- JAVASCRIPT LOGIC & BANK SOALAN -->
     <script>
-        const BANK_SOALAN = {
-            nombor_bulat: {
-                title: "NOMBOR BULAT",
-                icon: "🔢",
-                badge: "🔢 Pakar Nombor Bulat",
-                questions: [
-                   { q: "Apakah nilai tempat bagi digit 7 dalam nombor 4 783 216?", a: ["Ratus", "Ribu", "Ratus ribu", "Juta"], c: "Ratus ribu" },
-                { q: "Apakah nilai digit 5 dalam nombor 8 521 904?", a: ["5", "50", "500", "500 000"], c: "500 000" },
-                { q: "Yang manakah nombor paling besar?", a: ["6 987 234", "6 978 243", "6 987 243", "6 978 234"], c: "6 987 243" },
-                { q: "Yang manakah nombor paling kecil?", a: ["2 145 768", "2 154 678", "2 145 678", "2 154 768"], c: "2 145 678" },
-                { q: "Susunan menaik yang betul ialah", a: ["1 245 678, 1 245 768, 1 246 578, 1 264 578", "1 264 578, 1 246 578, 1 245 768, 1 245 678", "1 245 768, 1 245 678, 1 246 578, 1 264 578", "1 246 578, 1 245 678, 1 264 578, 1 245 768"], c: "1 245 678, 1 245 768, 1 246 578, 1 264 578" },
-                { q: "Bundarkan 5 678 412 kepada ratus ribu yang terdekat.", a: ["5 600 000", "5 700 000", "5 800 000", "6 000 000"], c: "5 700 000" },
-                { q: "Bundarkan 8 451 932 kepada juta yang terdekat.", a: ["8 000 000", "8 500 000", "9 000 000", "8 400 000"], c: "8 000 000" },
-                { q: "Lengkapkan pola nombor berikut.\n\n450 000, 500 000, 550 000, _____, 650 000", a: ["575 000", "600 000", "625 000", "700 000"], c: "600 000" },
-                { q: "Apakah nombor selepas 3 999 999?", a: ["4 000 000", "3 999 000", "4 000 001", "3 999 998"], c: "4 000 000" },
-                { q: "Apakah nombor sebelum 6 000 000?", a: ["5 999 998", "5 999 999", "6 000 001", "5 999 000"], c: "5 999 999" },
-                { q: "Cerakinkan 7 084 315.", a: ["7 000 000 + 80 000 + 4 000 + 300 + 15", "7 000 000 + 800 000 + 4 000 + 300 + 15", "7 000 000 + 84 000 + 300 + 15", "7 084 000 + 315"], c: "7 000 000 + 80 000 + 4 000 + 300 + 15" },
-                { q: "Antara berikut, yang manakah nombor ganjil?", a: ["6 284 112", "8 540 126", "9 876 541", "7 240 888"], c: "9 876 541" },
-                { q: " sebuah stadium boleh memuatkan 75 000 orang. Sebanyak 68 950 tempat duduk telah dipenuhi. Berapakah tempat duduk yang masih kosong?", a: ["5 950", "6 050", "6 150", "6 250"], c: "6 050" },
-                { q: "Sebuah perpustakaan mempunyai 1 250 000 buah buku. Sebanyak 245 000 buah ialah buku cerita. Berapakah bilangan buku selain buku cerita?", a: ["995 000", "1 005 000", "1 015 000", "1 025 000"], c: "1 005 000" },
-                { q: "Sebuah kilang menghasilkan 2 450 000 botol air pada bulan Januari dan 3 150 000 botol pada bulan Februari. Berapakah jumlah botol yang dihasilkan?", a: ["5 500 000", "5 600 000", "5 700 000", "5 800 000"], c: "5 600 000" },
-                { q: "Pilih ayat matematik yang betul.", a: ["4 juta = 400 000", "4 juta = 4 000 000", "4 juta = 40 000 000", "4 juta = 400 000 000"], c: "4 000 000" },
-                { q: "Sebuah syarikat mencetak 8 765 432 risalah. Digit 6 mewakili nilai", a: ["6", "60", "6 000", "60 000"], c: "60 000" },
-                { q: "Antara berikut, yang manakah dibundarkan kepada 3 500 000 apabila dibundarkan kepada ratus ribu terdekat?", a: ["3 449 999", "3 451 000", "3 549 999", "3 560 000"], c: "3 451 000" },
-                { q: "Nilai tempat bagi digit 2 dalam nombor 9 214 567 ialah", a: ["Puluh ribu", "Ratus ribu", "Ribu", "Puluh"], c: "Ratus ribu" },
-                { q: "Sebuah negeri mempunyai 4 980 450 penduduk. Apabila dibundarkan kepada juta terdekat, jumlah penduduk ialah", a: ["4 juta", "5 juta", "6 juta", "4.5 juta"], c: "5 juta" }
-            ],
+        let currentLang = 'ms'; // Bahasa default
+
+        const I18N_DICTIONARY = {
+            ms: {
+                welcomeTitle: "Bijak Math<br><span class='text-emerald-500 text-3xl'>tahun 6</span>",
+                welcomeMascot: "Hai Kawan!",
+                btnWelcomeStart: "Mula Belajar",
+                profileTitle: "Daftar Profil Baru",
+                profileDesc: "Masukkan namamu untuk memulakan pengembaraan Matematik!",
+                profileLabel: "Nama Murid :",
+                usernameInputPlaceholder: "Tulis nama di sini...",
+                btnSaveProfile: "Simpan Profil",
+                existingProfilesTitle: "Atau Pilih Profil Sedia Ada:",
+                mainMenuTitle: "Pilih Topik Belajar 🚀",
+                mainMenuDesc: "Kumpul bintang untuk buka lencana hebat!",
+                btnPerformanceRecords: "📊 Rekod Prestasi",
+                badgeHeading: "🏆 Lencana Pencapaian",
+                badgeEmpty: "Selesaikan topik dengan markah 100% untuk kumpul lencana!",
+                questionsUnit: "Soalan",
+                topicIntroDetailsSuffix: "Soalan Latih Tubi",
+                topicIntroHint: "Jawab dengan betul untuk dapatkan markah penuh dan bintang! Pastikan nyawa anda tidak habis.",
+                btnIntroBack: "Kembali",
+                btnIntroStart: "Mula Menjawab 🎮",
+                quizProgressText: "Soalan",
+                quizScoreText: "Markah",
+                btnExitQuiz: "🏠 Keluar ke Menu Utama",
+                resultTitleSuccess: "Sempurna 100%!",
+                resultTitleNormal: "Tahniah! Selesai!",
+                resultTitleFail: "Cuba Lagi!",
+                resLblCorrect: "Betul",
+                resLblWrong: "Salah",
+                resLblStars: "Bintang",
+                btnResultRetry: "🔄 Main Semula",
+                btnResultBack: "🏠 Kembali ke Topik",
+                recordsTitle: "📊 Rekod Prestasi",
+                recordsDesc: "Senarai markah kuiz yang telah dijawab",
+                btnClearRecords: "🗑️ Padam Rekod",
+                btnRecordsMainMenu: "🏠 Kembali ke Menu Utama",
+                recordsEmpty: "Belum ada rekod jawapan. Sila pilih topik dan selesaikan kuiz dahulu!",
+                recordsScoreLabel: "Betul",
+                settingsTitle: "⚙️ Tetapan",
+                settingsSound: "🔔 Kesan Bunyi",
+                settingsSoundOn: "HIDUP",
+                settingsSoundOff: "MATI",
+                settingsReset: "🔄 Set Semula Kemajuan Kuiz",
+                settingsDelete: "🚪 Log Keluar Akaun",
+                footerText: "Bijak Math tahun 6 • KSSR Malaysia",
+                alertNameEmpty: "Sila masukkan namamu terlebih dahulu! 😊",
+                alertExitQuiz: "Adakah anda pasti mahu berhenti menjawab dan kembali ke Menu Utama?",
+                alertClearRecords: "Adakah anda pasti mahu memadam semua sejarah rekod prestasi ini?",
+                alertResetProgress: "Adakah anda pasti mahu mengosongkan semua kutipan lencana, bintang dan rekod prestasi kembali ke 0?",
+                alertLogoutProfile: "Adakah anda pasti mahu log keluar? Profil anda tidak akan dipadam dan anda boleh log masuk semula pada bila-bila masa.",
+                brandingText: "<span class='font-bold text-slate-500'>Bijak Math v2.0</span><br>Silibus KSSR Matematik tahun 6 Kementerian Pendidikan Malaysia.<br>100% Fungsi Offline & Selamat Tanpa Iklan."
             },
-            tambah: {
-                title: "OPERASI BERGABUNG",
-                icon: "🧮",
-                badge: "🧮",
-                questions: [
-                   { q: "2 458 763 + 1 236 489 =", a: ["3 685 252", "3 695 252", "3 705 252", "3 715 252"], c: "3 695 252" },
-                { q: "8 450 000 − 2 785 468 =", a: ["5 654 532", "5 664 532", "5 674 532", "5 684 532"], c: "5 664 532" },
-                { q: "6 245 × 48 =", a: ["289 760", "299 760", "309 760", "319 760"], c: "299 760" },
-                { q: "84 672 ÷ 24 =", a: ["3 428", "3 528", "3 628", "3 728"], c: "3 528" },
-                { q: "350 + 45 × 12 =", a: ["840", "880", "890", "900"], c: "890" },
-                { q: "(960 − 240) ÷ 8 =", a: ["80", "90", "100", "110"], c: "90" },
-                { q: "75 × (28 − 16) =", a: ["800", "850", "900", "950"], c: "900" },
-                { q: "1 500 − 36 × 25 =", a: ["500", "550", "600", "650"], c: "600" },
-                { q: "(480 + 720) ÷ 15 =", a: ["70", "80", "90", "100"], c: "80" },
-                { q: "240 ÷ 6 × 15 =", a: ["500", "550", "600", "650"], c: "600" },
-                { q: "Sebuah kilang menghasilkan 2 450 botol sehari selama 28 hari. Sebanyak 6 500 botol rosak. Berapakah botol yang masih elok?", a: ["61 100", "62 100", "63 100", "64 100"], c: "62 100" },
-                { q: "Sebuah sekolah membeli 48 kotak buku. Setiap kotak mengandungi 36 buah buku. Sebanyak 250 buah buku telah digunakan. Berapakah baki buku?", a: ["1 468", "1 478", "1 488", "1 498"], c: "1 478" },
-                { q: "Ali mempunyai RM2 500. Dia membeli 8 buah kerusi berharga RM185 setiap satu. Berapakah baki wang Ali?", a: ["RM1 000", "RM1 020", "RM1 040", "RM1 060"], c: "RM1 020" },
-                { q: "Sebuah bas membawa 48 orang penumpang. Di hentian pertama, 15 orang turun dan 22 orang naik. Berapakah jumlah penumpang sekarang?", a: ["53", "54", "55", "56"], c: "55" },
-                { q: "Sebuah gudang mempunyai 9 600 kotak. Kotak-kotak itu dibahagikan sama rata kepada 32 lori. Berapakah bilangan kotak bagi setiap lori?", a: ["250", "280", "300", "320"], c: "300" },
-                { q: "Pilih ayat matematik yang betul.", a: ["(560 + 240) ÷ 8 = 90", "(560 + 240) ÷ 8 = 100", "(560 + 240) ÷ 8 = 110", "(560 + 240) ÷ 8 = 120"], c: "(560 + 240) ÷ 8 = 100" },
-                { q: "Seorang peladang memetik 1 250 biji mangga sehari selama 16 hari. Sebanyak 1 800 biji telah dijual. Berapakah baki mangga?", a: ["18 000", "18 200", "18 400", "18 600"], c: "18 200" },
-                { q: "Sebuah syarikat menghasilkan 3 250 kotak biskut sehari selama 20 hari. Sebanyak 8 500 kotak telah dihantar kepada pelanggan. Berapakah baki kotak?", a: ["55 500", "56 500", "57 500", "58 500"], c: "56 500" },
-                { q: "Nilai bagi 900 ÷ (15 × 3) ialah", a: ["15", "20", "25", "30"], c: "20" },
-                { q: "Sebuah kedai menjual 45 kotak air mineral. Setiap kotak mengandungi 24 botol. Sebanyak 315 botol telah dijual. Berapakah botol yang masih tinggal?", a: ["745", "755", "765", "775"], c: "765" }
-            ],
-            },
-            tolak: {
-                title: "TOLAK",
-                icon: "➖",
-                badge: "➖ Satria Tolak",
-                questions: [
-                    { q: "8 765 432 − 2 345 678 =", a: ["6 409 754", "6 419 754", "6 429 754", "6 439 754"], c: "6 419 754" },
-                    { q: "9 000 000 − 3 456 789 =", a: ["5 533 111", "5 543 111", "5 553 111", "5 563 111"], c: "5 543 111" },
-                    { q: "7 654 321 − 2 123 456 =", a: ["5 520 865", "5 530 865", "5 540 865", "5 550 865"], c: "5 530 865" },
-                    { q: "6 245 890 − 1 567 890 =", a: ["4 668 000", "4 678 000", "4 688 000", "4 698 000"], c: "4 678 000" },
-                    { q: "5 432 109 − 2 345 678 =", a: ["3 076 431", "3 086 431", "3 096 431", "3 106 431"], c: "3 086 431" },
-                    { q: "8 000 000 − 2 456 789 =", a: ["5 533 211", "5 543 211", "5 553 211", "5 563 211"], c: "5 543 211" },
-                    { q: "4 876 543 − 1 234 567 =", a: ["3 631 976", "3 641 976", "3 651 976", "3 661 976"], c: "3 641 976" },
-                    { q: "3 250 000 − 1 875 425 =", a: ["1 364 575", "1 374 575", "1 384 575", "1 394 575"], c: "1 374 575" },
-                    { q: "10 000 000 − 4 567 890 =", a: ["5 422 110", "5 432 110", "5 442 110", "5 452 110"], c: "5 432 110" },
-                    { q: "7 890 345 − 3 214 567 =", a: ["4 665 778", "4 675 778", "4 685 778", "4 695 778"], c: "4 675 778" },
-                    { q: "5 678 900 − _____ = 2 345 678", a: ["3 323 222", "3 333 222", "3 343 222", "3 353 222"], c: "3 333 222" },
-                    { q: "_____ − 2 456 789 = 4 543 211", a: ["6 990 000", "7 000 000", "7 010 000", "7 020 000"], c: "7 000 000" },
-                    { q: "Sebuah perpustakaan mempunyai 8 245 680 buah buku. Sebanyak 2 134 560 buah buku dipinjam. Berapakah bilangan buku yang masih ada?", a: ["6 101 120", "6 111 120", "6 121 120", "6 131 120"], c: "6 111 120" },
-                    { q: "Sebuah kilang menghasilkan 9 500 000 botol minuman. Sebanyak 3 275 450 botol dihantar ke kedai. Berapakah botol yang masih tinggal?", a: ["6 214 550", "6 224 550", "6 234 550", "6 244 550"], c: "6 224 550" },
-                    { q: "Seorang peniaga mempunyai 7 654 320 biji gula-gula. Dia menjual 2 345 678 biji. Berapakah baki gula-gula?", a: ["5 298 642", "5 308 642", "5 318 642", "5 328 642"], c: "5 308 642" },
-                    { q: "Berapakah beza antara 9 876 543 dan 4 321 098?", a: ["5 545 445", "5 555 445", "5 565 445", "5 575 445"], c: "5 555 445" },
-                    { q: "Pilih ayat matematik yang betul.", a: ["8 765 432 − 3 214 321 = 5 541 111", "8 765 432 − 3 214 321 = 5 551 111", "8 765 432 − 3 214 321 = 5 561 111", "8 765 432 − 3 214 321 = 5 571 111"], c: "5 551 111" },
-                    { q: "Sebuah sekolah mempunyai 4 850 orang murid. Seramai 1 275 orang menyertai lawatan. Berapakah murid yang tidak menyertai lawatan?", a: ["3 475", "3 575", "3 675", "3 775"], c: "3 575" },
-                    { q: "Sebuah ladang menghasilkan 25 680 biji kelapa. Sebanyak 12 345 biji telah dijual. Berapakah baki kelapa?", a: ["13 235", "13 335", "13 435", "13 535"], c: "13 335" },
-                    { q: "Faris mempunyai RM8 500. Dia membeli sebuah komputer riba berharga RM5 275. Berapakah baki wang Faris?", a: ["RM3 125", "RM3 225", "RM3 325", "RM3 425"], c: "RM3 225" }
-                ]
-            },
-            darab: {
-                title: "DARAB",
-                icon: "✖️",
-                badge: "✖️ Master Darab",
-                questions: [
-                    { q: "3 245 × 6 =", a: ["19 370", "19 470", "19 570", "19 670"], c: "19 470" },
-                    { q: "4 326 × 8 =", a: ["34 508", "34 608", "34 708", "34 808"], c: "34 608" },
-                    { q: "5 432 × 7 =", a: ["37 924", "38 024", "38 124", "38 224"], c: "38 024" },
-                    { q: "2 845 × 9 =", a: ["25 505", "25 605", "25 705", "25 805"], c: "25 605" },
-                    { q: "1 458 × 12 =", a: ["17 396", "17 496", "17 596", "17 696"], c: "17 496" },
-                    { q: "2 375 × 15 =", a: ["35 525", "35 625", "35 725", "35 825"], c: "35 625" },
-                    { q: "4 128 × 24 =", a: ["98 972", "99 072", "99 172", "99 272"], c: "99 072" },
-                    { q: "3 256 × 32 =", a: ["104 092", "104 192", "104 292", "104 392"], c: "104 192" },
-                    { q: "5 125 × 18 =", a: ["92 150", "92 250", "92 350", "92 450"], c: "92 250" },
-                    { q: "2 450 × 40 =", a: ["97 000", "98 000", "99 000", "100 000"], c: "98 000" },
-                    { q: "6 250 × 25 =", a: ["155 250", "156 250", "157 250", "158 250"], c: "156 250" },
-                    { q: "4 800 × 125 =", a: ["590 000", "600 000", "610 000", "620 000"], c: "600 000" },
-                    { q: "Sebuah kotak mengandungi 48 batang pensel. Sebanyak 325 kotak dihantar ke sebuah sekolah. Berapakah jumlah pensel semuanya?", a: ["15 500", "15 600", "15 700", "15 800"], c: "15 600" },
-                    { q: "Sebuah kilang menghasilkan 2 450 botol air sehari. Berapakah jumlah botol air yang dihasilkan dalam 28 hari?", a: ["67 600", "68 600", "69 600", "70 600"], c: "68 600" },
-                    { q: "Seorang peniaga menjual 135 kotak biskut. Setiap kotak mengandungi 48 paket biskut. Berapakah jumlah paket biskut yang dijual?", a: ["6 380", "6 480", "6 580", "6 680"], c: "6 480" },
-                    { q: "Sebuah ladang mempunyai 248 pokok mangga pada setiap baris. Jika terdapat 36 baris, berapakah jumlah pokok mangga?", a: ["8 828", "8 928", "9 028", "9 128"], c: "8 928" },
-                    { q: "Hasil darab 3 125 × 80 ialah", a: ["240 000", "250 000", "260 000", "270 000"], c: "250 000" },
-                    { q: "Pilih ayat matematik yang betul.", a: ["2 345 × 16 = 37 420", "2 345 × 16 = 37 520", "2 345 × 16 = 37 620", "2 345 × 16 = 37 720"], c: "37 520" },
-                    { q: "Sebuah sekolah membeli 275 kerusi bagi setiap dewan. Jika terdapat 18 dewan, berapakah jumlah kerusi yang dibeli?", a: ["4 850", "4 950", "5 050", "5 150"], c: "4 950" },
-                    { q: "Sebuah syarikat menghasilkan 1 250 kotak setiap minggu. Berapakah jumlah kotak yang dihasilkan dalam 52 minggu?", a: ["64 000", "65 000", "66 000", "67 000"], c: "65 000" }
-                ]
-            },
-            bahagi: {
-                title: "BAHAGI",
-                icon: "➗",
-                badge: "➗ Pakar Bahagi",
-                questions: [
-                    { q: "7 560 ÷ 9 =", a: ["830", "840", "850", "860"], c: "840" },
-                    { q: "9 504 ÷ 8 =", a: ["1 178", "1 188", "1 198", "1 208"], c: "1 188" },
-                    { q: "12 348 ÷ 6 =", a: ["2 048", "2 058", "2 068", "2 078"], c: "2 058" },
-                    { q: "15 750 ÷ 25 =", a: ["620", "630", "640", "650"], c: "630" },
-                    { q: "18 240 ÷ 30 =", a: ["600", "608", "618", "628"], c: "608" },
-                    { q: "24 960 ÷ 48 =", a: ["510", "520", "530", "540"], c: "520" },
-                    { q: "36 450 ÷ 50 =", a: ["719", "729", "739", "749"], c: "729" },
-                    { q: "48 000 ÷ 125 =", a: ["374", "384", "394", "404"], c: "384" },
-                    { q: "72 000 ÷ 80 =", a: ["800", "850", "900", "950"], c: "900" },
-                    { q: "84 960 ÷ 24 =", a: ["3 440", "3 540", "3 640", "3 740"], c: "3 540" },
-                    { q: "15 288 ÷ ____ = 364", a: ["40", "41", "42", "43"], c: "42" },
-                    { q: "____ ÷ 35 = 480", a: ["16 700", "16 800", "16 900", "17 000"], c: "16 800" },
-                    { q: "Sebuah perpustakaan mempunyai 18 900 buah buku. Buku-buku itu disusun sama rata pada 45 buah rak. Berapakah bilangan buku pada setiap rak?", a: ["410", "420", "430", "440"], c: "420" },
-                    { q: "Sebuah kilang menghasilkan 32 400 botol air. Botol-botol itu dibungkus sama banyak ke dalam 90 kotak. Berapakah bilangan botol dalam setiap kotak?", a: ["340", "350", "360", "370"], c: "360" },
-                    { q: "Seorang peniaga mempunyai 27 300 biji gula-gula. Dia memasukkan gula-gula itu sama rata ke dalam 65 balang. Berapakah bilangan gula-gula dalam setiap balang?", a: ["410", "420", "430", "440"], c: "420" },
-                    { q: "Sebuah lori membawa 56 700 kg pasir. Pasir itu dihantar sama rata kepada 70 tapak pembinaan. Berapakah jisim pasir yang diterima oleh setiap tapak?", a: ["800 kg", "810 kg", "820 kg", "830 kg"], c: "810 kg" },
-                    { q: "Hasil bahagi bagi 96 000 ÷ 120 ialah", a: ["700", "800", "900", "1 000"], c: "800" },
-                    { q: "Pilih ayat matematik yang betul.", a: ["28 224 ÷ 36 = 774", "28 224 ÷ 36 = 784", "28 224 ÷ 36 = 794", "28 224 ÷ 36 = 804"], c: "784" },
-                    { q: "Sebuah sekolah mempunyai 14 400 buku latihan. Buku-buku itu diagihkan sama rata kepada 32 kelas. Berapakah bilangan buku latihan bagi setiap kelas?", a: ["430", "440", "450", "460"], c: "450" },
-                    { q: "Sebuah syarikat menghasilkan 108 000 botol minuman dan membungkusnya ke dalam kotak yang mengandungi 120 botol setiap satu. Berapakah jumlah kotak yang dihasilkan?", a: ["800", "850", "900", "950"], c: "900" }
-                ]
-            },
-            pecahan: {
-                title: "PECAHAN",
-                icon: "🍰",
-                badge: "🍰 Wira Pecahan",
-                questions: [
-                   { q: "Tukarkan 17/5 kepada nombor bercampur.", a: ["2 ²⁄₅", "3 ¹⁄₅", "3 ²⁄₅", "4 ¹⁄₅"], c: "3 ²⁄₅" },
-                { q: "Tukarkan 6 3/8 kepada pecahan tak wajar.", a: ["48/8", "49/8", "50/8", "51/8"], c: "51/8" },
-                { q: "Pecahan yang setara dengan 5/8 ialah", a: ["10/14", "15/24", "20/30", "25/32"], c: "15/24" },
-                { q: "Yang manakah lebih besar?", a: ["7/12", "5/8", "Kedua-duanya sama", "Tidak dapat ditentukan"], c: "5/8" },
-                { q: "Susunan menaik yang betul ialah", a: ["2/5, 3/5, 4/5, 5/5", "5/5, 4/5, 3/5, 2/5", "3/5, 2/5, 4/5, 5/5", "4/5, 5/5, 2/5, 3/5"], c: "2/5, 3/5, 4/5, 5/5" },
-                { q: "3/4 + 5/8 =", a: ["1 1/8", "1 3/8", "1 5/8", "1 7/8"], c: "1 3/8" },
-                { q: "7/9 − 2/9 =", a: ["4/9", "5/9", "6/9", "7/9"], c: "5/9" },
-                { q: "2/3 + 5/6 =", a: ["1 1/6", "1 1/2", "1 2/3", "1 5/6"], c: "1 1/2" },
-                { q: "1 3/5 − 4/5 =", a: ["2/5", "3/5", "4/5", "5/5"], c: "5/5" },
-                { q: "3/7 × 14 =", a: ["4", "5", "6", "7"], c: "6" },
-                { q: "5/6 ÷ 5 =", a: ["1/5", "1/6", "5/6", "6/5"], c: "1/6" },
-                { q: "Sebuah kek dipotong kepada 16 bahagian yang sama. Ali makan 5/16 dan Amin makan 7/16 daripada kek itu. Berapakah bahagian kek yang telah dimakan?", a: ["10/16", "11/16", "12/16", "13/16"], c: "12/16" },
-                { q: "Seutas reben panjangnya 3 1/2 m. Sebanyak 1 3/4 m digunakan. Berapakah baki panjang reben?", a: ["1 1/4 m", "1 3/4 m", "2 m", "2 1/4 m"], c: "1 3/4 m" },
-                { q: "Sebuah tangki berisi 5/6 penuh. Sebanyak 1/3 daripada tangki digunakan. Berapakah baki air di dalam tangki?", a: ["1/6", "1/3", "1/2", "2/3"], c: "1/2" },
-                { q: "Sebuah pizza dipotong kepada 12 bahagian yang sama. Siti makan 5/12 dan Sara makan 1/4 daripada pizza itu. Berapakah jumlah pizza yang dimakan?", a: ["2/3", "3/4", "5/6", "11/12"], c: "2/3" },
-                { q: "Pilih ayat matematik yang betul.", a: ["2/5 + 1/5 = 2/5", "2/5 + 1/5 = 3/5", "2/5 + 1/5 = 4/5", "2/5 + 1/5 = 5/5"], c: "2/5 + 1/5 = 3/5" },
-                { q: "4 1/4 + 2 1/2 =", a: ["6 1/2", "6 3/4", "7", "7 1/4"], c: "6 3/4" },
-                { q: "5 2/3 − 1 5/6 =", a: ["3 2/3", "3 5/6", "4 1/6", "4 5/6"], c: "3 5/6" },
-                { q: "Antara berikut, yang manakah bersamaan dengan 3/5?", a: ["6/15", "9/15", "12/15", "15/15"], c: "9/15" },
-                { q: "Sebuah kelas mempunyai 36 orang murid. 5/9 daripada mereka menyertai pertandingan matematik. Berapakah bilangan murid yang menyertai pertandingan?", a: ["18", "20", "22", "24"], c: "20" }
-            ],
-            },
-            perpuluhan: {
-                title: "PERPULUHAN",
-                icon: "🟢",
-                badge: "🟢 Master Perpuluhan",
-                questions: [
-                    { q: "Apakah nilai tempat bagi digit 7 dalam nombor 45.783?", a: ["Sa", "Persepuluh", "Perseratus", "Perseribu"], c: "Perseribu" },
-                { q: "Apakah nilai digit 5 dalam nombor 18.547?", a: ["5", "0.5", "0.05", "0.005"], c: "0.05" },
-                { q: "Yang manakah nombor perpuluhan paling besar?", a: ["8.549", "8.594", "8.495", "8.459"], c: "8.594" },
-                { q: "Susunan menaik yang betul ialah", a: ["2.315, 2.351, 2.513, 2.531", "2.531, 2.513, 2.351, 2.315", "2.351, 2.315, 2.531, 2.513", "2.513, 2.531, 2.315, 2.351"], c: "2.315, 2.351, 2.513, 2.531" },
-                { q: "Bundarkan 8.476 kepada 2 tempat perpuluhan.", a: ["8.47", "8.48", "8.49", "8.50"], c: "8.48" },
-                { q: "Bundarkan 15.684 kepada 1 tempat perpuluhan.", a: ["15.6", "15.7", "15.8", "16.0"], c: "15.7" },
-                { q: "5.782 + 3.468 =", a: ["9.240", "9.250", "9.260", "9.270"], c: "9.250" },
-                { q: "12.845 − 5.376 =", a: ["7.459", "7.469", "7.479", "7.489"], c: "7.469" },
-                { q: "4.25 × 8 =", a: ["32.0", "34.0", "36.0", "38.0"], c: "34.0" },
-                { q: "18.9 ÷ 6 =", a: ["2.95", "3.05", "3.15", "3.25"], c: "3.15" },
-                { q: "Sebuah reben sepanjang 15.75 m dipotong sebanyak 8.45 m. Berapakah baki panjang reben?", a: ["7.20 m", "7.30 m", "7.40 m", "7.50 m"], c: "7.30 m" },
-                { q: "Amir membeli 2.85 kg epal dan 4.65 kg oren. Berapakah jumlah jisim buah-buahan itu?", a: ["7.40 kg", "7.50 kg", "7.60 kg", "7.70 kg"], c: "7.50 kg" },
-                { q: "Sebuah tangki mengandungi 25.6 L air. Sebanyak 8.75 L digunakan. Berapakah isipadu air yang tinggal?", a: ["16.75 L", "16.85 L", "16.95 L", "17.05 L"], c: "16.85 L" },
-                { q: "Sebuah lori membawa 3.25 tan pasir. Sebanyak 1.75 tan telah diturunkan. Berapakah baki pasir?", a: ["1.25 tan", "1.50 tan", "1.75 tan", "2.00 tan"], c: "1.50 tan" },
-                { q: "Pilih ayat matematik yang betul.", a: ["6.425 + 2.375 = 8.700", "6.425 + 2.375 = 8.800", "6.425 + 2.375 = 8.900", "6.425 + 2.375 = 9.000"], c: "6.425 + 2.375 = 8.800" },
-                { q: "Lengkapkan pola nombor berikut.\n\n3.25, 3.75, 4.25, _____, 5.25", a: ["4.50", "4.65", "4.75", "4.85"], c: "4.75" },
-                { q: "Yang manakah bersamaan dengan 0.625?", a: ["625/100", "625/1 000", "625/10", "625/10 000"], c: "625/1 000" },
-                { q: "Antara berikut, yang manakah lebih besar daripada 9.599 tetapi lebih kecil daripada 9.601?", a: ["9.598", "9.600", "9.602", "9.610"], c: "9.600" },
-                { q: "7.35 × 100 =", a: ["73.5", "735", "7 350", "0.735"], c: "735" },
-                { q: "Sebuah sekolah menggunakan 125.75 L cat. Kemudian digunakan lagi 34.25 L. Berapakah jumlah cat yang telah digunakan?", a: ["150.00 L", "155.00 L", "160.00 L", "165.00 L"], c: "160.00 L" }
-            ],
-            },
-            peratus: {
-                title: "PERATUS",
-                icon: "💯",
-                badge: "💯 Satria Peratus",
-                questions: [
-                   { q: "Tukarkan 35% kepada pecahan termudah.", a: ["3/5", "7/20", "7/10", "35/10"], c: "7/20" },
-                { q: "Tukarkan 12.5% kepada pecahan termudah.", a: ["1/4", "1/8", "1/10", "1/16"], c: "1/8" },
-                { q: "Tukarkan 0.72 kepada peratus.", a: ["7.2%", "72%", "720%", "0.72%"], c: "72%" },
-                { q: "Tukarkan 125% kepada nombor bercampur.", a: ["1 1/5", "1 1/4", "1 1/2", "2 1/4"], c: "1 1/4" },
-                { q: "Berapakah 15% daripada 400?", a: ["50", "60", "70", "80"], c: "60" },
-                { q: "Berapakah 30% daripada 250?", a: ["65", "70", "75", "80"], c: "75" },
-                { q: "Berapakah 45% daripada 800?", a: ["340", "350", "360", "370"], c: "360" },
-                { q: "Berapakah 12.5% daripada 160?", a: ["18", "20", "22", "24"], c: "20" },
-                { q: "Sebuah kelas mempunyai 40 orang murid. Jika 60% ialah perempuan, berapakah bilangan murid perempuan?", a: ["22", "23", "24", "25"], c: "24" },
-                { q: "Sebuah kedai menawarkan diskaun 20% bagi sebuah beg berharga RM180. Berapakah nilai diskaun?", a: ["RM30", "RM36", "RM40", "RM45"], c: "RM36" },
-                { q: "Sebuah televisyen berharga RM2 400 diberi diskaun 15%. Berapakah harga selepas diskaun?", a: ["RM2 020", "RM2 040", "RM2 060", "RM2 080"], c: "RM2 040" },
-                { q: "Sebuah sekolah mempunyai 1 200 orang murid. Jika 65% hadir ke sekolah, berapakah bilangan murid yang hadir?", a: ["760", "770", "780", "790"], c: "780" },
-                { q: "Sebuah perpustakaan mempunyai 2 000 buah buku. Sebanyak 35% ialah buku rujukan. Berapakah bilangan buku rujukan?", a: ["650", "700", "750", "800"], c: "700" },
-                { q: "Sebuah tangki mengandungi 600 L air. Sebanyak 25% telah digunakan. Berapakah isipadu air yang digunakan?", a: ["120 L", "140 L", "150 L", "160 L"], c: "150 L" },
-                { q: "Pilih ayat matematik yang betul.", a: ["40% daripada 250 = 90", "40% daripada 250 = 100", "40% daripada 250 = 110", "40% daripada 250 = 120"], c: "40% daripada 250 = 100" },
-                { q: "Tukarkan 0.045 kepada peratus.", a: ["0.45%", "4.5%", "45%", "450%"], c: "4.5%" },
-                { q: "Sebuah syarikat menghasilkan 5 000 botol minuman. Sebanyak 8% rosak. Berapakah bilangan botol yang rosak?", a: ["300", "350", "400", "450"], c: "400" },
-                { q: "Seorang murid memperoleh 72 markah daripada 80 markah. Berapakah peratus markah yang diperoleh?", a: ["85%", "90%", "92%", "95%"], c: "90%" },
-                { q: "Sebuah ladang mempunyai 800 pokok mangga. Sebanyak 55% daripada pokok itu berbuah. Berapakah bilangan pokok yang berbuah?", a: ["420", "430", "440", "450"], c: "440" },
-                { q: "Sebuah kilang mempunyai 2 500 pekerja. Jika 84% hadir bekerja pada hari Isnin, berapakah bilangan pekerja yang hadir?", a: ["2 000", "2 050", "2 100", "2 150"], c: "2 100" }
-            ],
-            },
-            wang: {
-                title: "WANG",
-                icon: "💰",
-                badge: "💰 Jutawan Math",
-                questions: [
-                   { q: "RM35.80 + RM48.25 =", a: ["RM82.05", "RM83.05", "RM84.05", "RM85.05"], c: "RM84.05" },
-                { q: "RM250.00 − RM89.75 =", a: ["RM159.25", "RM160.25", "RM161.25", "RM162.25"], c: "RM160.25" },
-                { q: "Sebuah buku berharga RM18.50. Berapakah harga bagi 8 buah buku?", a: ["RM138.00", "RM148.00", "RM158.00", "RM168.00"], c: "RM148.00" },
-                { q: "RM576.00 dibahagikan sama rata kepada 9 orang. Setiap orang menerima", a: ["RM62.00", "RM63.00", "RM64.00", "RM65.00"], c: "RM64.00" },
-                { q: "Harga sebuah beg ialah RM125.90. Jika Ali membayar dengan RM200.00, berapakah baki wangnya?", a: ["RM73.10", "RM74.10", "RM75.10", "RM76.10"], c: "RM74.10" },
-                { q: "Harga sebuah televisyen berharga RM2 450 diberi diskaun 20%. Berapakah harga selepas diskaun?", a: ["RM1 940", "RM1 950", "RM1 960", "RM1 970"], c: "RM1 960" },
-                { q: "Sebuah komputer riba berharga RM3 200. Cukai jualan sebanyak 6% dikenakan. Berapakah jumlah yang perlu dibayar?", a: ["RM3 372", "RM3 382", "RM3 392", "RM3 402"], c: "RM3 392" },
-                { q: "Seorang peniaga membeli 15 kotak biskut dengan harga RM24.50 setiap kotak. Berapakah jumlah bayaran?", a: ["RM357.50", "RM367.50", "RM377.50", "RM387.50"], c: "RM367.50" },
-                { q: "Siti mempunyai RM350.00. Dia membeli sepasang kasut berharga RM128.90 dan sehelai baju berharga RM75.50. Berapakah baki wangnya?", a: ["RM144.60", "RM145.60", "RM146.60", "RM147.60"], c: "RM145.60" },
-                { q: "Harga sebuah basikal ialah RM850.00. Jika dibayar secara ansuran selama 10 months, berapakah bayaran setiap bulan?", a: ["RM80", "RM82", "RM85", "RM90"], c: "RM85" },
-                { q: "Sebuah restoran memperoleh RM2 850.50 pada waktu makan tengah hari dan RM3 475.80 pada waktu makan malam. Berapakah jumlah hasil jualan?", a: ["RM6 316.30", "RM6 326.30", "RM6 336.30", "RM6 346.30"], c: "RM6 326.30" },
-                { q: "Harga sebuah jam tangan ialah RM480.00. Selepas diskaun 15%, harga jam ialah", a: ["RM398.00", "RM408.00", "RM418.00", "RM428.00"], c: "RM408.00" },
-                { q: "Seorang pelanggan membeli 6 botol minyak masak berharga RM32.80 setiap satu. Berapakah jumlah bayaran?", a: ["RM186.80", "RM196.80", "RM206.80", "RM216.80"], c: "RM196.80" },
-                { q: "RM1 250.00 dibahagikan sama rata kepada 5 orang adik-beradik. Setiap seorang menerima", a: ["RM200", "RM225", "RM250", "RM275"], c: "RM250" },
-                { q: "Pilih ayat matematik yang betul.", a: ["RM85.40 + RM24.60 = RM100.00", "RM85.40 + RM24.60 = RM110.00", "RM85.40 + RM24.60 = RM120.00", "RM85.40 + RM24.60 = RM130.00"], c: "RM110.00" },
-                { q: "Sebuah kedai menjual 25 kotak air mineral pada harga RM18.40 sekotak. Berapakah jumlah hasil jualan?", a: ["RM440.00", "RM450.00", "RM460.00", "RM470.00"], c: "RM460.00" },
-                { q: "Harga sebuah peti sejuk ialah RM2 800. Pembeli membayar deposit RM500. Berapakah baki yang perlu dibayar?", a: ["RM2 100", "RM2 200", "RM2 300", "RM2 400"], c: "RM2 300" },
-                { q: "Sebuah keluarga membelanjakan RM685.40 untuk barangan dapur dan RM248.75 untuk pakaian. Berapakah jumlah perbelanjaan mereka?", a: ["RM924.15", "RM934.15", "RM944.15", "RM954.15"], c: "RM934.15" },
-                { q: "Seorang peniaga membeli 40 helai tuala pada harga RM12.50 sehelai. Berapakah jumlah kos pembelian?", a: ["RM450", "RM475", "RM500", "RM525"], c: "RM500" },
-                { q: "Sebuah mesin fotostat berharga RM5 800. Selepas diskaun 10%, harga yang perlu dibayar ialah", a: ["RM5 120", "RM5 220", "RM5 320", "RM5 420"], c: "RM5 220" }
-            ],
-            },
-            ukuran_sukatan: {
-                title: "UKURAN & SUKATAN",
-                icon: "📏",
-                badge: "📏 Wira Ukuran",
-                questions: [
-                    { q: "Tukarkan 8.5 km kepada meter.", a: ["850 m", "8 050 m", "8 500 m", "85 000 m"], c: "8 500 m" },
-                { q: "Tukarkan 6 m 45 cm kepada sentimeter.", a: ["605 cm", "625 cm", "645 cm", "650 cm"], c: "645 cm" },
-                { q: "Tukarkan 9 250 m kepada kilometer.", a: ["9.025 km", "9.25 km", "9.52 km", "92.5 km"], c: "9.25 km" },
-                { q: "Sebatang paip panjangnya 15 m 80 cm. Sebanyak 6 m 45 cm dipotong. Berapakah baki panjang paip?", a: ["9 m 25 cm", "9 m 35 cm", "9 m 45 cm", "9 m 55 cm"], c: "9 m 35 cm" },
-                { q: "Yang manakah paling panjang?", a: ["1 850 m", "1.8 km", "2 km", "1 950 m"], c: "2 km" },
-                { q: "Tukarkan 3.75 km kepada meter.", a: ["375 m", "3 075 m", "3 750 m", "37 500 m"], c: "3 750 m" },
-                { q: "Sebuah lori bergerak sejauh 185.5 km pada waktu pagi dan 214.8 km pada waktu petang. Berapakah jumlah jarak yang dilalui?", a: ["390.3 km", "400.3 km", "410.3 km", "420.3 km"], c: "400.3 km" },
-                { q: "Seutas tali sepanjang 24 m dipotong kepada 8 bahagian yang sama. Berapakah panjang setiap bahagian?", a: ["2 m", "3 m", "4 m", "5 m"], c: "3 m" },
-                { q: "Tukarkan 5 600 mm kepada meter.", a: ["0.56 m", "5.6 m", "56 m", "560 m"], c: "5.6 m" },
-                { q: "Berapakah jumlah panjang 7 batang besi, setiap satunya 2.5 m?", a: ["16.5 m", "17.0 m", "17.5 m", "18.0 m"], c: "17.5 m" },
-                { q: "Sebuah trek mempunyai panjang 400 m. Berapakah jumlah jarak yang dilalui selepas 12 pusingan?", a: ["4 400 m", "4 600 m", "4 800 m", "5 000 m"], c: "4 800 m" },
-                { q: "Tukarkan 12 km 350 m kepada meter.", a: ["12 035 m", "12 305 m", "12 350 m", "12 530 m"], c: "12 350 m" },
-                { q: "Seorang pelari berlari sejauh 6.8 km pada waktu pagi dan 5.7 km pada waktu petang. Berapakah jumlah jarak yang dilalui?", a: ["11.5 km", "12.0 km", "12.5 km", "13.0 km"], c: "12.5 km" },
-                { q: "Sebatang kayu sepanjang 8 m 90 cm dipotong kepada dua bahagian. Bahagian pertama berukuran 3 m 75 cm. Berapakah panjang bahagian kedua?", a: ["5 m 5 cm", "5 m 10 cm", "5 m 15 cm", "5 m 20 cm"], c: "5 m 15 cm" },
-                { q: "Tukarkan 0.85 km kepada meter.", a: ["85 m", "850 m", "8 500 m", "85 000 m"], c: "850 m" },
-                { q: "Pilih ayat matematik yang betul.", a: ["2.5 km = 250 m", "2.5 km = 2 500 m", "2.5 km = 25 000 m", "2.5 km = 250 000 m"], c: "2.5 km = 2 500 m" },
-                { q: "Sebuah jalan raya sepanjang 18 km sedang dibaiki. Sebanyak 7.5 km telah siap dibaiki. Berapakah panjang jalan yang belum dibaiki?", a: ["9.5 km", "10 km", "10.5 km", "11 km"], c: "10.5 km" },
-                { q: "Berapakah jumlah panjang 9 utas tali, setiap satunya 1.8 m?", a: ["15.2 m", "15.8 m", "16.2 m", "16.8 m"], c: "16.2 m" },
-                { q: "Tukarkan 1 250 cm kepada meter.", a: ["1.25 m", "12.5 m", "125 m", "1 250 m"], c: "12.5 m" },
-                { q: "Sebuah bas bergerak sejauh 275 km pada hari Sabtu dan 368 km pada hari Ahad. Berapakah jumlah jarak perjalanan bas itu?", a: ["623 km", "633 km", "643 km", "653 km"], c: "643 km" }
-            ],
-            },
-            jisim: {
-                title: "JISIM",
-                icon: "⚖️",
-                badge: "⚖️ Pakar Jisim",
-                questions: [
-                   { q: "Tukarkan 8.5 kg kepada gram.", a: ["850 g", "8 050 g", "8 500 g", "85 000 g"], c: "8 500 g" },
-                { q: "Tukarkan 12 750 g kepada kilogram.", a: ["1.275 kg", "12.075 kg", "12.75 kg", "127.5 kg"], c: "12.75 kg" },
-                { q: "Yang manakah paling berat?", a: ["950 g", "980 g", "1 kg", "1.2 kg"], c: "1.2 kg" },
-                { q: "Yang manakah paling ringan?", a: ["0.45 kg", "650 g", "900 g", "1.2 kg"], c: "0.45 kg" },
-                { q: "Sebungkus beras berjisim 12.5 kg. Ali membeli 8 bungkus. Berapakah jumlah jisim beras?", a: ["90 kg", "95 kg", "100 kg", "105 kg"], c: "100 kg" },
-                { q: "Sebuah kotak berjisim 15 kg 750 g. Sebuah lagi kotak berjisim 8 kg 250 g. Berapakah jumlah jisim kedua-dua kotak?", a: ["23 kg", "24 kg", "24 kg 500 g", "25 kg"], c: "24 kg" },
-                { q: "Sebuah guni baja berjisim 50 kg. Sebanyak 18.5 kg telah digunakan. Berapakah baki baja?", a: ["30.5 kg", "31.5 kg", "32.5 kg", "33.5 kg"], c: "31.5 kg" },
-                { q: "Tukarkan 4.25 kg kepada gram.", a: ["425 g", "4 025 g", "4 250 g", "42 500 g"], c: "4 250 g" },
-                { q: "Sebiji tembikai berjisim 6.8 kg and sebiji lagi berjisim 5.7 kg. Berapakah jumlah jisim kedua-duanya?", a: ["11.5 kg", "12.0 kg", "12.5 kg", "13.0 kg"], c: "12.5 kg" },
-                { q: "Tukarkan 18 000 g kepada kilogram.", a: ["1.8 kg", "18 kg", "180 kg", "1 800 kg"], c: "18 kg" },
-                { q: "Sebuah lori membawa 3 tan pasir. Berapakah jisim pasir itu dalam kilogram?", a: ["300 kg", "3 000 kg", "30 000 kg", "300 000 kg"], c: "3 000 kg" },
-                { q: "Sebuah gudang menyimpan 125 guni beras. Setiap guni berjisim 40 kg. Berapakah jumlah jisim semua guni?", a: ["4 000 kg", "4 500 kg", "5 000 kg", "5 500 kg"], c: "5 000 kg" },
-                { q: "Seorang peniaga mempunyai 250 kg gula. Dia menjual 86 kg. Berapakah baki gula?", a: ["154 kg", "164 kg", "174 kg", "184 kg"], c: "164 kg" },
-                { q: "Tukarkan 2.75 kg kepada gram.", a: ["275 g", "2 075 g", "2 750 g", "27 500 g"], c: "2 750 g" },
-                { q: "Sebuah mesin mengangkat beban seberat 850 kg dan satu lagi beban seberat 650 kg. Berapakah jumlah jisim kedua-dua beban?", a: ["1 300 kg", "1 400 kg", "1 500 kg", "1 600 kg"], c: "1 500 kg" },
-                { q: "Pilih ayat matematik yang betul.", a: ["1 tan = 100 kg", "1 tan = 1 000 kg", "1 tan = 10 000 kg", "1 tan = 100 000 kg"], c: "1 tan = 1 000 kg" },
-                { q: "Sebuah lori membawa 5 tan simen. Sebanyak 1 750 kg telah diturunkan. Berapakah baki simen?", a: ["3 150 kg", "3 250 kg", "3 350 kg", "3 450 kg"], c: "3 250 kg" },
-                { q: "Sebiji nangka berjisim 12.5 kg. Berapakah jumlah jisim 6 biji nangka?", a: ["70 kg", "72 kg", "75 kg", "78 kg"], c: "75 kg" },
-                { q: "Tukarkan 875 g kepada kilogram.", a: ["0.875 kg", "8.75 kg", "87.5 kg", "875 kg"], c: "0.875 kg" },
-                { q: "Sebuah gudang mempunyai 425 kg tepung. Kemudian ditambah lagi 275 kg. Berapakah jumlah jisim tepung di dalam gudang?", a: ["650 kg", "675 kg", "700 kg", "725 kg"], c: "700 kg" }
-            ],
-            },
-            isi_padu_cecair: {
-                title: "ISI PADU CECAIR",
-                icon: "🧪",
-                badge: "🧪 Juara Isi Padu",
-                questions: [
-                    { q: "Tukarkan 8.5 L kepada mililiter.", a: ["850 mL", "8 050 mL", "8 500 mL", "85 000 mL"], c: "8 500 mL" },
-                { q: "Tukarkan 12 750 mL kepada liter.", a: ["1.275 L", "12.075 L", "12.75 L", "127.5 L"], c: "12.75 L" },
-                { q: "Yang manakah mempunyai isi padu paling besar?", a: ["950 mL", "1 L", "1.2 L", "1 100 mL"], c: "1.2 L" },
-                { q: "Yang manakah mempunyai isi padu paling kecil?", a: ["0.45 L", "650 mL", "900 mL", "1.2 L"], c: "0.45 L" },
-                { q: "Sebuah tangki mengandungi 35.5 L air. Sebanyak 12.8 L digunakan. Berapakah isipadu air yang tinggal?", a: ["21.7 L", "22.7 L", "23.7 L", "24.7 L"], c: "22.7 L" },
-                { q: "Sebotol minyak masak mengandungi 2.75 L. Berapakah isipadunya dalam mililiter?", a: ["275 mL", "2 075 mL", "2 750 mL", "27 500 mL"], c: "2 750 mL" },
-                { q: "Sebuah tangki mengandungi 125.5 L air. Ditambah lagi 84.7 L air. Berapakah jumlah isipadu air?", a: ["209.2 L", "210.2 L", "211.2 L", "212.2 L"], c: "210.2 L" },
-                { q: "Tukarkan 3 250 mL kepada liter.", a: ["0.325 L", "3.025 L", "3.25 L", "32.5 L"], c: "3.25 L" },
-                { q: "Sebuah tong mengandungi 48 L jus. Jus itu dibahagikan sama rata ke dalam 12 botol. Berapakah isi padu jus dalam setiap botol?", a: ["2 L", "3 L", "4 L", "5 L"], c: "4 L" },
-                { q: "Tukarkan 6.8 L kepada mililiter.", a: ["680 mL", "6 080 mL", "6 800 mL", "68 000 mL"], c: "6 800 mL" },
-                { q: "Sebuah kolam kecil mengandungi 250 L air. Sebanyak 95.5 L digunakan. Berapakah baki air?", a: ["153.5 L", "154.5 L", "155.5 L", "156.5 L"], c: "154.5 L" },
-                { q: "Sebotol air mineral mengandungi 1.5 L air. Berapakah jumlah isipadu air dalam 24 botol?", a: ["34 L", "35 L", "36 L", "37 L"], c: "36 L" },
-                { q: "Sebuah tangki mengandungi 450 L air. Ditambah lagi 275 L air. Berapakah jumlah isipadu air?", a: ["705 L", "715 L", "725 L", "735 L"], c: "725 L" },
-                { q: "Sebuah tangki mengandungi 800 L air. Sebanyak 325 L telah digunakan. Berapakah isipadu air yang tinggal?", a: ["455 L", "465 L", "475 L", "485 L"], c: "475 L" },
-                { q: "Pilih ayat matematik yang betul.", a: ["1 L = 100 mL", "1 L = 1 000 mL", "1 L = 10 000 mL", "1 L = 100 000 mL"], c: "1 L = 1 000 mL" },
-                { q: "Tukarkan 875 mL kepada liter.", a: ["0.875 L", "8.75 L", "87.5 L", "875 L"], c: "0.875 L" },
-                { q: "Sebuah botol mengandungi 2.4 L air. Berapakah jumlah isipadu air dalam 15 botol?", a: ["34 L", "35 L", "36 L", "37 L"], c: "36 L" },
-                { q: "Sebuah bekas mengandungi 27 L jus. Jus itu dibahagikan sama rata kepada 9 jag. Berapakah isi padu jus dalam setiap jag?", a: ["2 L", "3 L", "4 L", "5 L"], c: "3 L" },
-                { q: "Tukarkan 15 L 250 mL kepada mililiter.", a: ["15 025 mL", "15 205 mL", "15 250 mL", "15 520 mL"], c: "15 250 mL" },
-                { q: "Sebuah kilang menghasilkan 1 250 L minuman pada waktu pagi dan 875 L pada waktu petang. Berapakah jumlah minuman yang dihasilkan?", a: ["2 025 L", "2 075 L", "2 125 L", "2 175 L"], c: "2 125 L" }
-            ],
-            },
-            masa_waktu: {
-                title: "MASA & WAKTU",
-                icon: "⏱️",
-                badge: "⏱️ Kapten Masa",
-                questions: [
-                   { q: "Jam menunjukkan pukul 2:45 petang. Dalam sistem 24 jam, waktu tersebut ialah:", a: ["0245", "1245", "1445", "1645"], c: "1445" },
-                { q: "Waktu 0730 dalam sistem 12 jam ialah:", a: ["7:30 malam", "7:30 pagi", "5:30 pagi", "7:03 pagi"], c: "7:30 pagi" },
-                { q: "Sebuah kelas bermula pada pukul 8:15 pagi dan tamat pada pukul 9:50 pagi. Berapakah tempoh kelas itu?", a: ["1 jam 15 minit", "1 jam 25 minit", "1 jam 35 minit", "1 jam 45 minit"], c: "1 jam 35 minit" },
-                { q: "Sebuah bas bertolak pada pukul 10:20 pagi. Jika perjalanan mengambil masa 2 jam 45 minit, bas tiba pada pukul:", a: ["12:55 tengah hari", "1:05 petang", "1:15 petang", "12:45 tengah hari"], c: "1:05 petang" },
-                { q: "Jam menunjukkan pukul 9:40 malam. Dalam sistem 24 jam, waktu tersebut ialah:", a: ["0940", "1940", "2140", "2240"], c: "2140" },
-                { q: "Tempoh dari pukul 1:15 petang hingga 4:00 petang ialah:", a: ["2 jam 35 minit", "2 jam 45 minit", "3 jam 15 minit", "3 jam 45 minit"], c: "2 jam 45 minit" },
-                { q: "Waktu 1815 dalam sistem 12 jam ialah:", a: ["6:15 pagi", "6:15 petang", "8:15 malam", "5:15 petang"], c: "6:15 petang" },
-                { q: "Sebuah filem bermula pada pukul 7:20 malam dan berlangsung selama 1 jam 50 minit. Filem tamat pada pukul:", a: ["8:50 malam", "9:00 malam", "9:10 malam", "9:20 malam"], c: "9:10 malam" },
-                { q: "Tempoh dari pukul 11:30 pagi hingga 2:15 petang ialah:", a: ["2 jam 35 minit", "2 jam 45 minit", "3 jam 15 minit", "3 jam 45 minit"], c: "2 jam 45 minit" },
-                { q: "Waktu 0000 dalam sistem 12 jam ialah:", a: ["12:00 tengah hari", "12:00 tengah malam", "1:00 pagi", "11:59 malam"], c: "12:00 tengah malam" },
-                { q: "Di Malaysia sekarang pukul 3:00 petang. Sebuah negara mempunyai beza masa 2 jam lebih awal daripada Malaysia. Waktu di negara tersebut ialah:", a: ["4:00 petang", "5:00 petang", "1:00 petang", "6:00 petang"], c: "1:00 petang" },
-                { q: "Sebuah penerbangan berlepas pada pukul 9:10 pagi dan mengambil masa 3 jam 25 minit. Penerbangan tiba pada pukul:", a: ["12:25 tengah hari", "12:35 tengah hari", "12:45 tengah hari", "1:35 petang"], c: "12:35 tengah hari" },
-                { q: "Tempoh dari pukul 6:45 pagi hingga 8:20 pagi ialah:", a: ["1 jam 25 minit", "1 jam 35 minit", "1 jam 45 minit", "2 jam 35 minit"], c: "1 jam 35 minit" },
-                { q: "Waktu 2345 dalam sistem 12 jam ialah:", a: ["11:45 pagi", "10:45 malam", "11:45 malam", "12:45 tengah malam"], c: "11:45 malam" },
-                { q: "Sebuah kereta bertolak pada pukul 1:30 petang. Selepas 4 jam 20 minit, kereta itu tiba pada pukul:", a: ["5:40 petang", "5:50 petang", "6:00 petang", "6:20 petang"], c: "5:50 petang" }
-            ]
-            },
-            purata: {
-                title: "PURATA",
-                icon: "📊",
-                badge: "📊 Master Nisbah",
-                questions: [
-                   { q: "Apakah purata bagi nombor 12, 16, 18 dan 14?", a: ["14", "15", "16", "17"], c: "15" },
-                { q: "Apakah purata bagi 25, 30, 35, 40 dan 45?", a: ["33", "34", "35", "36"], c: "35" },
-                { q: "Jumlah markah bagi 5 ujian ialah 400. Berapakah purata markah?", a: ["70", "75", "80", "85"], c: "80" },
-                { q: "Purata umur 4 orang murid ialah 11 tahun. Berapakah jumlah umur mereka?", a: ["33 tahun", "40 tahun", "44 tahun", "48 tahun"], c: "44 tahun" },
-                { q: "Berat lima kotak ialah 8 kg, 10 kg, 12 kg, 9 kg dan 11 kg. Berapakah purata beratnya?", a: ["9 kg", "10 kg", "11 kg", "12 kg"], c: "10 kg" },
-                { q: "Markah Ali dalam empat ujian ialah 78, 82, 90 dan 86. Berapakah purata markahnya?", a: ["82", "83", "84", "85"], c: "83" },
-                { q: "Sebuah bas bergerak sejauh 240 km dalam 4 hari. Jika jarak yang dilalui setiap hari adalah sama, berapakah purata jarak sehari?", a: ["50 km", "55 km", "60 km", "65 km"], c: "60 km" },
-                { q: "Seorang peniaga memperoleh keuntungan RM250, RM300, RM350 dan RM500 dalam empat hari. Berapakah purata keuntungan sehari?", a: ["RM330", "RM340", "RM350", "RM360"], c: "RM350" },
-                { q: "Sebuah keluarga menggunakan 120 L air dalam 6 hari. Berapakah purata penggunaan air sehari?", a: ["18 L", "19 L", "20 L", "21 L"], c: "20 L" },
-                { q: "Purata tinggi 6 orang murid ialah 145 cm. Berapakah jumlah tinggi mereka?", a: ["850 cm", "860 cm", "870 cm", "880 cm"], c: "870 cm" },
-                { q: "Bilangan buku yang dibaca oleh Amin dalam lima minggu ialah 6, 8, 7, 9 dan 10 buah. Berapakah purata buku yang dibaca setiap minggu?", a: ["7", "8", "9", "10"], c: "8" },
-                { q: "Purata suhu bagi 7 hari ialah 30°C. Berapakah jumlah suhu bagi tujuh hari itu?", a: ["200°C", "205°C", "210°C", "215°C"], c: "210°C" },
-                { q: "Sebuah lori membawa 2 400 kg barang dalam 8 perjalanan. Berapakah purata berat barang bagi setiap perjalanan?", a: ["250 kg", "280 kg", "300 kg", "320 kg"], c: "300 kg" },
-                { q: "Lima orang murid mendapat markah 68, 72, 75, 80 dan 85. Berapakah purata markah mereka?", a: ["74", "75", "76", "77"], c: "76" },
-                { q: "Pilih ayat matematik yang betul.", a: ["Purata = Jumlah ÷ Bilangan data", "Purata = Jumlah × Bilangan data", "Purata = Bilangan data ÷ Jumlah", "Purata = Jumlah + Bilangan data"], c: "Purata = Jumlah ÷ Bilangan data" },
-                { q: "Sebuah kedai menjual 420 botol minuman dalam 7 hari. Berapakah purata jualan sehari?", a: ["50 botol", "55 botol", "60 botol", "65 botol"], c: "60 botol" },
-                { q: "Purata umur 8 orang pemain ialah 14 tahun. Berapakah jumlah umur mereka?", a: ["102 tahun", "108 tahun", "112 tahun", "118 tahun"], c: "112 tahun" },
-                { q: "Bilangan penumpang bas selama empat hari ialah 48, 52, 50 dan 54 orang. Berapakah purata penumpang sehari?", a: ["49 orang", "50 orang", "51 orang", "52 orang"], c: "51 orang" },
-                { q: "Sebuah ladang menghasilkan 1 800 kg sayur dalam 6 minggu. Berapakah purata hasil seminggu?", a: ["250 kg", "275 kg", "300 kg", "325 kg"], c: "300 kg" },
-                { q: "Markah Farah dalam lima ujian ialah 88, 92, 84, 90 dan 86. Berapakah purata markahnya?", a: ["86", "87", "88", "89"], c: "87" }
-            ],
+            en: {
+                welcomeTitle: "Smart Math<br><span class='text-emerald-500 text-3xl'>grade 6</span>",
+                welcomeMascot: "Hello Friend!",
+                btnWelcomeStart: "Start Learning",
+                profileTitle: "Register New Profile",
+                profileDesc: "Enter your name to start your Mathematics adventure!",
+                profileLabel: "Student Name :",
+                usernameInputPlaceholder: "Type name here...",
+                btnSaveProfile: "Save Profile",
+                existingProfilesTitle: "Or Choose Existing Profile:",
+                mainMenuTitle: "Choose Study Topic 🚀",
+                mainMenuDesc: "Collect stars to unlock awesome badges!",
+                btnPerformanceRecords: "📊 Performance Records",
+                badgeHeading: "🏆 Achievement Badges",
+                badgeEmpty: "Complete a topic with 100% score to collect badges!",
+                questionsUnit: "Questions",
+                topicIntroDetailsSuffix: "Practice Questions",
+                topicIntroHint: "Answer correctly to get full marks and stars! Make sure you don't run out of lives.",
+                btnIntroBack: "Back",
+                btnIntroStart: "Start Quiz 🎮",
+                quizProgressText: "Question",
+                quizScoreText: "Score",
+                btnExitQuiz: "🏠 Exit to Main Menu",
+                resultTitleSuccess: "Perfect 100%!",
+                resultTitleNormal: "Congratulations! Done!",
+                resultTitleFail: "Try Again!",
+                resLblCorrect: "Correct",
+                resLblWrong: "Wrong",
+                resLblStars: "Stars",
+                btnResultRetry: "🔄 Replay",
+                btnResultBack: "🏠 Back to Topics",
+                recordsTitle: "📊 Performance Records",
+                recordsDesc: "List of quiz scores answered",
+                btnClearRecords: "🗑️ Clear Records",
+                btnRecordsMainMenu: "🏠 Back to Main Menu",
+                recordsEmpty: "No records yet. Please pick a topic and complete a quiz first!",
+                recordsScoreLabel: "Correct",
+                settingsTitle: "⚙️ Settings",
+                settingsSound: "🔔 Sound Effects",
+                settingsSoundOn: "ON",
+                settingsSoundOff: "OFF",
+                settingsReset: "🔄 Reset Quiz Progress",
+                settingsDelete: "🚪 Log Out Account",
+                footerText: "Smart Math grade 6 • Cambridge & KSSR Aligned",
+                alertNameEmpty: "Please enter your name first! 😊",
+                alertExitQuiz: "Are you sure you want to stop and return to the Main Menu?",
+                alertClearRecords: "Are you sure you want to delete all performance records history?",
+                alertResetProgress: "Are you sure you want to clear all collected badges, stars, and records back to 0?",
+                alertLogoutProfile: "Are you sure you want to log out? Your profile won't be deleted and you can log back in anytime.",
+                brandingText: "<span class='font-bold text-slate-500'>Smart Math v2.0</span><br>Aligned with primary math curriculums.<br>100% Offline Functional & Safe Ads-Free."
             }
         };
+
+        const BANK_SOALAN = {
+    nombor_bulat: {
+        title: { ms: "Nombor Bulat", en: "Whole Numbers" }, 
+        icon: "🔢", 
+        badge: { ms: "🔢 Pakar Nombor Bulat", en: "🔢 Whole Number Expert" },
+        questions: [
+            { q: { ms: "Apakah nilai tempat bagi digit 7 dalam nombor 4 783 216?", en: "What is the place value of digit 7 in the number 4 783 216?" }, a: ["Ratus", "Ribu", "Ratus ribu", "Juta"], c: "Ratus ribu" },
+            { q: { ms: "Apakah nilai digit 5 dalam nombor 8 521 904?", en: "What is the digit value of 5 in the number 8 521 904?" }, a: ["5", "50", "500", "500 000"], c: "500 000" },
+            { q: { ms: "Yang manakah nombor paling besar?", en: "Which number is the largest?" }, a: ["6 987 234", "6 978 243", "6 987 243", "6 978 234"], c: "6 987 243" },
+            { q: { ms: "Yang manakah nombor paling kecil?", en: "Which number is the smallest?" }, a: ["2 145 768", "2 154 678", "2 145 678", "2 154 768"], c: "2 145 678" },
+            { q: { ms: "Susunan menaik yang betul ialah", en: "The correct ascending order is" }, a: ["1 245 678, 1 245 768, 1 246 578, 1 264 578", "1 264 578, 1 246 578, 1 245 768, 1 245 678", "1 245 768, 1 245 678, 1 246 578, 1 264 578", "1 246 578, 1 245 678, 1 264 578, 1 245 768"], c: "1 245 678, 1 245 768, 1 246 578, 1 264 578" },
+            { q: { ms: "Bundarkan 5 678 412 kepada ratus ribu yang terdekat.", en: "Round off 5 678 412 to the nearest hundred thousand." }, a: ["5 600 000", "5 700 000", "5 800 000", "6 000 000"], c: "5 700 000" },
+            { q: { ms: "Bundarkan 8 451 932 kepada juta yang terdekat.", en: "Round off 8 451 932 to the nearest million." }, a: ["8 000 000", "8 500 000", "9 000 000", "8 400 000"], c: "8 000 000" },
+            { q: { ms: "Lengkapkan pola nombor berikut.\n\n450 000, 500 000, 550 000, _____, 650 000", en: "Complete the following number pattern.\n\n450 000, 500 000, 550 000, _____, 650 000" }, a: ["575 000", "600 000", "625 000", "700 000"], c: "600 000" },
+            { q: { ms: "Apakah nombor selepas 3 999 999?", en: "What is the number after 3 999 999?" }, a: ["4 000 000", "3 999 000", "4 000 001", "3 999 998"], c: "4 000 000" },
+            { q: { ms: "Apakah nombor sebelum 6 000 000?", en: "What is the number before 6 000 000?" }, a: ["5 999 998", "5 999 999", "6 000 001", "5 999 000"], c: "5 999 999" },
+            { q: { ms: "Cerakinkan 7 084 315.", en: "Partition 7 084 315." }, a: ["7 000 000 + 80 000 + 4 000 + 300 + 15", "7 000 000 + 800 000 + 4 000 + 300 + 15", "7 000 000 + 84 000 + 300 + 15", "7 084 000 + 315"], c: "7 000 000 + 80 000 + 4 000 + 300 + 15" },
+            { q: { ms: "Antara berikut, yang manakah nombor ganjil?", en: "Which of the following is an odd number?" }, a: ["6 284 112", "8 540 126", "9 876 541", "7 240 888"], c: "9 876 541" },
+            { q: { ms: "Sebuah stadium boleh memuatkan 75 000 orang. Sebanyak 68 950 tempat duduk telah dipenuhi. Berapakah tempat duduk yang masih kosong?", en: "A stadium can accommodate 75 000 people. A total of 68 950 seats have been filled. How many seats are still empty?" }, a: ["5 950", "6 050", "6 150", "6 250"], c: "6 050" },
+            { q: { ms: "Sebuah perpustakaan mempunyai 1 250 000 buah buku. Sebanyak 245 000 buah ialah buku cerita. Berapakah bilangan buku selain buku cerita?", en: "A library has 1 250 000 books. A total of 245 000 books are storybooks. How many books are there other than storybooks?" }, a: ["995 000", "1 005 000", "1 015 000", "1 025 000"], c: "1 005 000" },
+            { q: { ms: "Sebuah kilang menghasilkan 2 450 000 botol air pada bulan Januari dan 3 150 000 botol pada bulan Februari. Berapakah jumlah botol yang dihasilkan?", en: "A factory produced 2 450 000 water bottles in January and 3 150 000 bottles in February. What is the total number of bottles produced?" }, a: ["5 500 000", "5 600 000", "5 700 000", "5 800 000"], c: "5 600 000" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["4 juta = 400 000", "4 juta = 4 000 000", "4 juta = 40 000 000", "4 juta = 400 000 000"], c: "4 000 000" },
+            { q: { ms: "Sebuah syarikat mencetak 8 765 432 risalah. Digit 6 mewakili nilai", en: "A company printed 8 765 432 brochures. Digit 6 represents the value of" }, a: ["6", "60", "6 000", "60 000"], c: "60 000" },
+            { q: { ms: "Antara berikut, yang manakah dibundarkan kepada 3 500 000 apabila dibundarkan kepada ratus ribu terdekat?", en: "Which of the following rounds off to 3 500 000 when rounded off to the nearest hundred thousand?" }, a: ["3 449 999", "3 451 000", "3 549 999", "3 560 000"], c: "3 451 000" },
+            { q: { ms: "Nilai tempat bagi digit 2 dalam nombor 9 214 567 ialah", en: "The place value of digit 2 in the number 9 214 567 is" }, a: ["Puluh ribu", "Ratus ribu", "Ribu", "Puluh"], c: "Ratus ribu" },
+            { q: { ms: "Sebuah negeri mempunyai 4 980 450 penduduk. Apabila dibundarkan kepada juta terdekat, jumlah penduduk ialah", en: "A state has 4 980 450 residents. When rounded off to the nearest million, the total population is" }, a: ["4 juta", "5 juta", "6 juta", "4.5 juta"], c: "5 juta" }
+        ]
+    },
+    tambah: {
+        title: { ms: "Operasi Bergabung", en: "Mixed Operations" }, 
+        icon: "🧮", 
+        badge: { ms: "🧮 Pakar Operasi", en: "🧮 Operations Expert" },
+        questions: [
+            { q: { ms: "2 458 763 + 1 236 489 =", en: "2 458 763 + 1 236 489 =" }, a: ["3 685 252", "3 695 252", "3 705 252", "3 715 252"], c: "3 695 252" },
+            { q: { ms: "8 450 000 − 2 785 468 =", en: "8 450 000 − 2 785 468 =" }, a: ["5 654 532", "5 664 532", "5 674 532", "5 684 532"], c: "5 664 532" },
+            { q: { ms: "6 245 × 48 =", en: "6 245 × 48 =" }, a: ["289 760", "299 760", "309 760", "319 760"], c: "299 760" },
+            { q: { ms: "84 672 ÷ 24 =", en: "84 672 ÷ 24 =" }, a: ["3 428", "3 528", "3 628", "3 728"], c: "3 528" },
+            { q: { ms: "350 + 45 × 12 =", en: "350 + 45 × 12 =" }, a: ["840", "880", "890", "900"], c: "890" },
+            { q: { ms: "(960 − 240) ÷ 8 =", en: "(960 − 240) ÷ 8 =" }, a: ["80", "90", "100", "110"], c: "90" },
+            { q: { ms: "75 × (28 − 16) =", en: "75 × (28 − 16) =" }, a: ["800", "850", "900", "950"], c: "900" },
+            { q: { ms: "1 500 − 36 × 25 =", en: "1 500 − 36 × 25 =" }, a: ["500", "550", "600", "650"], c: "600" },
+            { q: { ms: "(480 + 720) ÷ 15 =", en: "(480 + 720) ÷ 15 =" }, a: ["70", "80", "90", "100"], c: "80" },
+            { q: { ms: "240 ÷ 6 × 15 =", en: "240 ÷ 6 × 15 =" }, a: ["500", "550", "600", "650"], c: "600" },
+            { q: { ms: "Sebuah kilang menghasilkan 2 450 botol sehari selama 28 days. Sebanyak 6 500 botol rosak. Berapakah botol yang masih elok?", en: "A factory produces 2 450 bottles a day for 28 days. A total of 6 500 bottles are damaged. How many bottles are still in good condition?" }, a: ["61 100", "62 100", "63 100", "64 100"], c: "62 100" },
+            { q: { ms: "Sebuah sekolah membeli 48 kotak buku. Setiap kotak mengandungi 36 buah buku. Sebanyak 250 buah buku telah digunakan. Berapakah baki buku?", en: "A school buys 48 boxes of books. Each box contains 36 books. A total of 250 books have been used. What is the remaining balance of books?" }, a: ["1 468", "1 478", "1 488", "1 498"], c: "1 478" },
+            { q: { ms: "Ali mempunyai RM2 500. Dia membeli 8 buah kerusi berharga RM185 setiap satu. Berapakah baki wang Ali?", en: "Ali has RM2 500. He buys 8 chairs costing RM185 each. What is Ali's remaining balance of money?" }, a: ["RM1 000", "RM1 020", "RM1 040", "RM1 060"], c: "RM1 020" },
+            { q: { ms: "Sebuah bas membawa 48 orang penumpang. Di hentian pertama, 15 orang turun dan 22 orang naik. Berapakah jumlah penumpang sekarang?", en: "A bus carries 48 passengers. At the first stop, 15 people get off and 22 people get on. How many passengers are there now?" }, a: ["53", "54", "55", "56"], c: "55" },
+            { q: { ms: "Sebuah gudang mempunyai 9 600 kotak. Kotak-kotak itu dibahagikan sama rata kepada 32 lori. Berapakah bilangan kotak bagi setiap lori?", en: "A warehouse has 9 600 boxes. The boxes are divided equally among 32 trucks. What is the number of boxes for each truck?" }, a: ["250", "280", "300", "320"], c: "300" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["(560 + 240) ÷ 8 = 90", "(560 + 240) ÷ 8 = 100", "(560 + 240) ÷ 8 = 110", "(560 + 240) ÷ 8 = 120"], c: "(560 + 240) ÷ 8 = 100" },
+            { q: { ms: "Seorang peladang memetik 1 250 biji mangga sehari selama 16 hari. Sebanyak 1 800 biji telah dijual. Berapakah baki mangga?", en: "A farmer plucks 1 250 mangoes a day for 16 days. A total of 1 800 mangoes have been sold. What is the remaining balance of mangoes?" }, a: ["18 000", "18 200", "18 400", "18 600"], c: "18 200" },
+            { q: { ms: "Sebuah syarikat menghasilkan 3 250 kotak biskut sehari selama 20 hari. Sebanyak 8 500 kotak telah dihantar kepada pelanggan. Berapakah baki kotak?", en: "A company produces 3 250 boxes of biscuits a day for 20 days. A total of 8 500 boxes have been sent to customers. What is the remaining balance of boxes?" }, a: ["55 500", "56 500", "57 500", "58 500"], c: "56 500" },
+            { q: { ms: "Nilai bagi 900 ÷ (15 × 3) ialah", en: "The value of 900 ÷ (15 × 3) is" }, a: ["15", "20", "25", "30"], c: "20" },
+            { q: { ms: "Sebuah kedai menjual 45 kotak air mineral. Setiap kotak mengandungi 24 botol. Sebanyak 315 botol telah dijual. Berapakah botol yang masih tinggal?", en: "A shop sells 45 boxes of mineral water. Each box contains 24 bottles. A total of 315 bottles have been sold. How many bottles are left?" }, a: ["745", "755", "765", "775"], c: "765" }
+        ]
+    },
+    tolak: {
+        title: { ms: "Tolak", en: "Subtraction" }, 
+        icon: "➖", 
+        badge: { ms: "➖ Satria Tolak", en: "➖ Subtraction Knight" },
+        questions: [
+            { q: { ms: "8 765 432 − 2 345 678 =", en: "8 765 432 − 2 345 678 =" }, a: ["6 409 754", "6 419 754", "6 429 754", "6 439 754"], c: "6 419 754" },
+            { q: { ms: "9 000 000 − 3 456 789 =", en: "9 000 000 − 3 456 789 =" }, a: ["5 533 111", "5 543 111", "5 553 111", "5 563 111"], c: "5 543 111" },
+            { q: { ms: "7 654 321 − 2 123 456 =", en: "7 654 321 − 2 123 456 =" }, a: ["5 520 865", "5 530 865", "5 540 865", "5 550 865"], c: "5 530 865" },
+            { q: { ms: "6 245 890 − 1 567 890 =", en: "6 245 890 − 1 567 890 =" }, a: ["4 668 000", "4 678 000", "4 688 000", "4 698 000"], c: "4 678 000" },
+            { q: { ms: "5 432 109 − 2 345 678 =", en: "5 432 109 − 2 345 678 =" }, a: ["3 076 431", "3 086 431", "3 096 431", "3 106 431"], c: "3 086 431" },
+            { q: { ms: "8 000 000 − 2 456 789 =", en: "8 000 000 − 2 456 789 =" }, a: ["5 533 211", "5 543 211", "5 553 211", "5 563 211"], c: "5 543 211" },
+            { q: { ms: "4 876 543 − 1 234 567 =", en: "4 876 543 − 1 234 567 =" }, a: ["3 631 976", "3 641 976", "3 651 976", "3 661 976"], c: "3 641 976" },
+            { q: { ms: "3 250 000 − 1 875 425 =", en: "3 250 000 − 1 875 425 =" }, a: ["1 364 575", "1 374 575", "1 384 575", "1 394 575"], c: "1 374 575" },
+            { q: { ms: "10 000 000 − 4 567 890 =", en: "10 000 000 − 4 567 890 =" }, a: ["5 422 110", "5 432 110", "5 442 110", "5 452 110"], c: "5 432 110" },
+            { q: { ms: "7 890 345 − 3 214 567 =", en: "7 890 345 − 3 214 567 =" }, a: ["4 665 778", "4 675 778", "4 685 778", "4 695 778"], c: "4 675 778" },
+            { q: { ms: "5 678 900 − _____ = 2 345 678", en: "5 678 900 − _____ = 2 345 678" }, a: ["3 323 222", "3 333 222", "3 343 222", "3 353 222"], c: "3 333 222" },
+            { q: { ms: "_____ − 2 456 789 = 4 543 211", en: "_____ − 2 456 789 = 4 543 211" }, a: ["6 990 000", "7 000 000", "7 010 000", "7 020 000"], c: "7 000 000" },
+            { q: { ms: "Sebuah perpustakaan mempunyai 8 245 680 buah buku. Sebanyak 2 134 560 buah buku dipinjam. Berapakah bilangan buku yang masih ada?", en: "A library has 8 245 680 books. A total of 2 134 560 books are borrowed. What is the number of books still available?" }, a: ["6 101 120", "6 111 120", "6 121 120", "6 131 120"], c: "6 111 120" },
+            { q: { ms: "Sebuah kilang menghasilkan 9 500 000 botol minuman. Sebanyak 3 275 450 botol dihantar ke kedai. Berapakah botol yang masih tinggal?", en: "A factory produces 9 500 000 beverage bottles. A total of 3 275 450 bottles are sent to shops. How many bottles are left?" }, a: ["6 214 550", "6 224 550", "6 234 550", "6 244 550"], c: "6 224 550" },
+            { q: { ms: "Seorang peniaga mempunyai 7 654 320 biji gula-gula. Dia menjual 2 345 678 biji. Berapakah baki gula-gula?", en: "A merchant has 7 654 320 candies. He sells 2 345 678 candies. What is the remaining balance of candies?" }, a: ["5 298 642", "5 308 642", "5 318 642", "5 328 642"], c: "5 308 642" },
+            { q: { ms: "Berapakah beza antara 9 876 543 dan 4 321 098?", en: "What is the difference between 9 876 543 and 4 321 098?" }, a: ["5 545 445", "5 555 445", "5 565 445", "5 575 445"], c: "5 555 445" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["8 765 432 − 3 214 321 = 5 541 111", "8 765 432 − 3 214 321 = 5 551 111", "8 765 432 − 3 214 321 = 5 561 111", "8 765 432 − 3 214 321 = 5 571 111"], c: "5 551 111" },
+            { q: { ms: "Sebuah sekolah mempunyai 4 850 orang murid. Seramai 1 275 orang menyertai lawatan. Berapakah murid yang tidak menyertai lawatan?", en: "A school has 4 850 students. A total of 1 275 students joined the trip. How many students did not join the trip?" }, a: ["3 475", "3 575", "3 675", "3 775"], c: "3 575" },
+            { q: { ms: "Sebuah ladang menghasilkan 25 680 biji kelapa. Sebanyak 12 345 biji telah dijual. Berapakah baki kelapa?", en: "A farm produces 25 680 coconuts. A total of 12 345 coconuts have been sold. What is the remaining balance of coconuts?" }, a: ["13 235", "13 335", "13 435", "13 535"], c: "13 335" },
+            { q: { ms: "Faris mempunyai RM8 500. Dia membeli sebuah komputer riba berharga RM5 275. Berapakah baki wang Faris?", en: "Faris has RM8 500. He buys a laptop costing RM5 275. What is Faris's remaining balance of money?" }, a: ["RM3 125", "RM3 225", "RM3 325", "RM3 425"], c: "RM3 225" }
+        ]
+    },
+    darab: {
+        title: { ms: "Darab", en: "Multiplication" }, 
+        icon: "✖️", 
+        badge: { ms: "✖️ Master Darab", en: "✖️ Multiplication Master" },
+        questions: [
+            { q: { ms: "3 245 × 6 =", en: "3 245 × 6 =" }, a: ["19 370", "19 470", "19 570", "19 670"], c: "19 470" },
+            { q: { ms: "4 326 × 8 =", en: "4 326 × 8 =" }, a: ["34 508", "34 608", "34 708", "34 808"], c: "34 608" },
+            { q: { ms: "5 432 × 7 =", en: "5 432 × 7 =" }, a: ["37 924", "38 024", "38 124", "38 224"], c: "38 024" },
+            { q: { ms: "2 845 × 9 =", en: "2 845 × 9 =" }, a: ["25 505", "25 605", "25 705", "25 805"], c: "25 605" },
+            { q: { ms: "1 458 × 12 =", en: "1 458 × 12 =" }, a: ["17 396", "17 496", "17 596", "17 696"], c: "17 496" },
+            { q: { ms: "2 375 × 15 =", en: "2 375 × 15 =" }, a: ["35 525", "35 625", "35 725", "35 825"], c: "35 625" },
+            { q: { ms: "4 128 × 24 =", en: "4 128 × 24 =" }, a: ["98 972", "99 072", "99 172", "99 272"], c: "99 072" },
+            { q: { ms: "3 256 × 32 =", en: "3 256 × 32 =" }, a: ["104 092", "104 192", "104 292", "104 392"], c: "104 192" },
+            { q: { ms: "5 125 × 18 =", en: "5 125 × 18 =" }, a: ["92 150", "92 250", "92 350", "92 450"], c: "92 250" },
+            { q: { ms: "2 450 × 40 =", en: "2 450 × 40 =" }, a: ["97 000", "98 000", "99 000", "100 000"], c: "98 000" },
+            { q: { ms: "6 250 × 25 =", en: "6 250 × 25 =" }, a: ["155 250", "156 250", "157 250", "158 250"], c: "156 250" },
+            { q: { ms: "4 800 × 125 =", en: "4 800 × 125 =" }, a: ["590 000", "600 000", "610 000", "620 000"], c: "600 000" },
+            { q: { ms: "Sebuah kotak mengandungi 48 batang pensel. Sebanyak 325 kotak dihantar ke sebuah sekolah. Berapakah jumlah pensel semuanya?", en: "A box contains 48 pencils. A total of 325 boxes are sent to a school. How many pencils are there in total?" }, a: ["15 500", "15 600", "15 700", "15 800"], c: "15 600" },
+            { q: { ms: "Sebuah kilang menghasilkan 2 450 botol air sehari. Berapakah jumlah botol air yang dihasilkan dalam 28 hari?", en: "A factory produces 2 450 water bottles a day. What is the total number of water bottles produced in 28 days?" }, a: ["67 600", "68 600", "69 600", "70 600"], c: "68 600" },
+            { q: { ms: "Seorang peniaga menjual 135 kotak biskut. Setiap kotak mengandungi 48 paket biskut. Berapakah jumlah paket biskut yang dijual?", en: "A trader sells 135 boxes of biscuits. Each box contains 48 packets of biscuits. What is the total number of biscuit packets sold?" }, a: ["6 380", "6 480", "6 580", "6 680"], c: "6 480" },
+            { q: { ms: "Sebuah ladang mempunyai 248 pokok mangga pada setiap baris. Jika terdapat 36 baris, berapakah jumlah pokok mangga?", en: "A farm has 248 mango trees in each row. If there are 36 rows, what is the total number of mango trees?" }, a: ["8 828", "8 928", "9 028", "9 128"], c: "8 928" },
+            { q: { ms: "Hasil darab 3 125 × 80 ialah", en: "The product of 3 125 × 80 is" }, a: ["240 000", "250 000", "260 000", "270 000"], c: "250 000" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["2 345 × 16 = 37 420", "2 345 × 16 = 37 520", "2 345 × 16 = 37 620", "2 345 × 16 = 37 720"], c: "37 520" },
+            { q: { ms: "Sebuah sekolah membeli 275 kerusi bagi setiap dewan. Jika terdapat 18 dewan, berapakah jumlah kerusi yang dibeli?", en: "A school buys 275 chairs for each hall. If there are 18 halls, what is the total number of chairs bought?" }, a: ["4 850", "4 950", "5 050", "5 150"], c: "4 950" },
+            { q: { ms: "Sebuah syarikat menghasilkan 1 250 kotak setiap minggu. Berapakah jumlah kotak yang dihasilkan dalam 52 minggu?", en: "A company produces 1 250 boxes every week. What is the total number of boxes produced in 52 weeks?" }, a: ["64 000", "65 000", "66 000", "67 000"], c: "65 000" }
+        ]
+    },
+    bahagi: {
+        title: { ms: "Bahagi", en: "Division" }, 
+        icon: "➗", 
+        badge: { ms: "➗ Pakar Bahagi", en: "➗ Division Expert" },
+        questions: [
+            { q: { ms: "7 560 ÷ 9 =", en: "7 560 ÷ 9 =" }, a: ["830", "840", "850", "860"], c: "840" },
+            { q: { ms: "9 504 ÷ 8 =", en: "9 504 ÷ 8 =" }, a: ["1 178", "1 188", "1 198", "1 208"], c: "1 188" },
+            { q: { ms: "12 348 ÷ 6 =", en: "12 348 ÷ 6 =" }, a: ["2 048", "2 058", "2 068", "2 078"], c: "2 058" },
+            { q: { ms: "15 750 ÷ 25 =", en: "15 750 ÷ 25 =" }, a: ["620", "630", "640", "650"], c: "630" },
+            { q: { ms: "18 240 ÷ 30 =", en: "18 240 ÷ 30 =" }, a: ["600", "608", "618", "628"], c: "608" },
+            { q: { ms: "24 960 ÷ 48 =", en: "24 960 ÷ 48 =" }, a: ["510", "520", "530", "540"], c: "520" },
+            { q: { ms: "36 450 ÷ 50 =", en: "36 450 ÷ 50 =" }, a: ["719", "729", "739", "749"], c: "729" },
+            { q: { ms: "48 000 ÷ 125 =", en: "48 000 ÷ 125 =" }, a: ["374", "384", "394", "404"], c: "384" },
+            { q: { ms: "72 000 ÷ 80 =", en: "72 000 ÷ 80 =" }, a: ["800", "850", "900", "950"], c: "900" },
+            { q: { ms: "84 960 ÷ 24 =", en: "84 960 ÷ 24 =" }, a: ["3 440", "3 540", "3 640", "3 740"], c: "3 540" },
+            { q: { ms: "15 288 ÷ ____ = 364", en: "15 288 ÷ ____ = 364" }, a: ["40", "41", "42", "43"], c: "42" },
+            { q: { ms: "____ ÷ 35 = 480", en: "____ ÷ 35 = 480" }, a: ["16 700", "16 800", "16 900", "17 000"], c: "16 800" },
+            { q: { ms: "Sebuah perpustakaan mempunyai 18 900 buah buku. Buku-buku itu disusun sama rata pada 45 buah rak. Berapakah bilangan buku pada setiap rak?", en: "A library has 18 900 books. The books are arranged equally on 45 shelves. What is the number of books on each shelf?" }, a: ["410", "420", "430", "440"], c: "420" },
+            { q: { ms: "Sebuah kilang menghasilkan 32 400 botol air. Botol-botol itu dibungkus sama banyak ke dalam 90 kotak. Berapakah bilangan botol dalam setiap kotak?", en: "A factory produces 32 400 water bottles. The bottles are packed equally into 90 boxes. What is the number of bottles in each box?" }, a: ["340", "350", "360", "370"], c: "360" },
+            { q: { ms: "Seorang peniaga mempunyai 27 300 biji gula-gula. Dia memasukkan gula-gula itu sama rata ke dalam 65 balang. Berapakah bilangan gula-gula dalam setiap balang?", en: "A merchant has 27 300 candies. He puts the candies equally into 65 jars. What is the number of candies in each jar?" }, a: ["410", "420", "430", "440"], c: "420" },
+            { q: { ms: "Sebuah lori membawa 56 700 kg pasir. Pasir itu dihantar sama rata kepada 70 tapak pembinaan. Berapakah jisim pasir yang diterima oleh setiap tapak?", en: "A truck carries 56 700 kg of sand. The sand is delivered equally to 70 construction sites. What is the mass of sand received by each site?" }, a: ["800 kg", "810 kg", "820 kg", "830 kg"], c: "810 kg" },
+            { q: { ms: "Hasil bahagi bagi 96 000 ÷ 120 ialah", en: "The quotient of 96 000 ÷ 120 is" }, a: ["700", "800", "900", "1 000"], c: "800" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["28 224 ÷ 36 = 774", "28 224 ÷ 36 = 784", "28 224 ÷ 36 = 794", "28 224 ÷ 36 = 804"], c: "784" },
+            { q: { ms: "Sebuah sekolah mempunyai 14 400 buku latihan. Buku-buku itu diagihkan sama rata kepada 32 kelas. Berapakah bilangan buku latihan bagi setiap kelas?", en: "A school has 14 400 exercise books. The books are distributed equally to 32 classes. What is the number of exercise books for each class?" }, a: ["430", "440", "450", "460"], c: "450" },
+            { q: { ms: "Sebuah syarikat menghasilkan 108 000 botol minuman dan membungkusnya ke dalam kotak yang mengandungi 120 botol setiap satu. Berapakah jumlah kotak yang dihasilkan?", en: "A company produces 108 000 beverage bottles and packs them into boxes containing 120 bottles each. What is the total number of boxes produced?" }, a: ["800", "850", "900", "950"], c: "900" }
+        ]
+    },
+    pecahan: {
+        title: { ms: "Pecahan", en: "Fractions" }, 
+        icon: "🍰", 
+        badge: { ms: "🍰 Wira Pecahan", en: "🍰 Fraction Hero" },
+        questions: [
+            { q: { ms: "Tukarkan 17/5 kepada nombor bercampur.", en: "Convert 17/5 to a mixed number." }, a: ["2 ²⁄₅", "3 ¹⁄₅", "3 ²⁄₅", "4 ¹⁄₅"], c: "3 ²⁄₅" },
+            { q: { ms: "Tukarkan 6 3/8 kepada pecahan tak wajar.", en: "Convert 6 3/8 to an improper fraction." }, a: ["48/8", "49/8", "50/8", "51/8"], c: "51/8" },
+            { q: { ms: "Pecahan yang setara dengan 5/8 ialah", en: "The equivalent fraction of 5/8 is" }, a: ["10/14", "15/24", "20/30", "25/32"], c: "15/24" },
+            { q: { ms: "Yang manakah lebih besar?", en: "Which one is larger?" }, a: ["7/12", "5/8", "Kedua-duanya sama", "Tidak dapat ditentukan"], c: "5/8" },
+            { q: { ms: "Susunan menaik yang betul ialah", en: "The correct ascending order is" }, a: ["2/5, 3/5, 4/5, 5/5", "5/5, 4/5, 3/5, 2/5", "3/5, 2/5, 4/5, 5/5", "4/5, 5/5, 2/5, 3/5"], c: "2/5, 3/5, 4/5, 5/5" },
+            { q: { ms: "3/4 + 5/8 =", en: "3/4 + 5/8 =" }, a: ["1 1/8", "1 3/8", "1 5/8", "1 7/8"], c: "1 3/8" },
+            { q: { ms: "7/9 − 2/9 =", en: "7/9 − 2/9 =" }, a: ["4/9", "5/9", "6/9", "7/9"], c: "5/9" },
+            { q: { ms: "2/3 + 5/6 =", en: "2/3 + 5/6 =" }, a: ["1 1/6", "1 1/2", "1 2/3", "1 5/6"], c: "1 1/2" },
+            { q: { ms: "1 3/5 − 4/5 =", en: "1 3/5 − 4/5 =" }, a: ["2/5", "3/5", "4/5", "5/5"], c: "5/5" },
+            { q: { ms: "3/7 × 14 =", en: "3/7 × 14 =" }, a: ["4", "5", "6", "7"], c: "6" },
+            { q: { ms: "5/6 ÷ 5 =", en: "5/6 ÷ 5 =" }, a: ["1/5", "1/6", "5/6", "6/5"], c: "1/6" },
+            { q: { ms: "Sebuah kek dipotong kepada 16 bahagian yang sama. Ali makan 5/16 dan Amin makan 7/16 daripada kek itu. Berapakah bahagian kek yang telah dimakan?", en: "A cake is cut into 16 equal parts. Ali ate 5/16 and Amin ate 7/16 of the cake. How many parts of the cake have been eaten?" }, a: ["10/16", "11/16", "12/16", "13/16"], c: "12/16" },
+            { q: { ms: "Seutas reben panjangnya 3 1/2 m. Sebanyak 1 3/4 m digunakan. Berapakah baki panjang reben?", en: "A piece of ribbon is 3 1/2 m long. A total of 1 3/4 m is used. What is the remaining length of the ribbon?" }, a: ["1 1/4 m", "1 3/4 m", "2 m", "2 1/4 m"], c: "1 3/4 m" },
+            { q: { ms: "Sebuah tangki berisi 5/6 penuh. Sebanyak 1/3 daripada tangki digunakan. Berapakah baki air di dalam tangki?", en: "A tank is 5/6 full. A total of 1/3 of the tank is used. What is the remaining balance of water in the tank?" }, a: ["1/6", "1/3", "1/2", "2/3"], c: "1/2" },
+            { q: { ms: "Sebuah pizza dipotong kepada 12 bahagian yang sama. Siti makan 5/12 dan Sara makan 1/4 daripada pizza itu. Berapakah jumlah pizza yang dimakan?", en: "A pizza is cut into 12 equal parts. Siti ate 5/12 and Sara ate 1/4 of the pizza. What is the total amount of pizza eaten?" }, a: ["2/3", "3/4", "5/6", "11/12"], c: "2/3" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["2/5 + 1/5 = 2/5", "2/5 + 1/5 = 3/5", "2/5 + 1/5 = 4/5", "2/5 + 1/5 = 5/5"], c: "2/5 + 1/5 = 3/5" },
+            { q: { ms: "4 1/4 + 2 1/2 =", en: "4 1/4 + 2 1/2 =" }, a: ["6 1/2", "6 3/4", "7", "7 1/4"], c: "6 3/4" },
+            { q: { ms: "5 2/3 − 1 5/6 =", en: "5 2/3 − 1 5/6 =" }, a: ["3 2/3", "3 5/6", "4 1/6", "4 5/6"], c: "3 5/6" },
+            { q: { ms: "Antara berikut, yang manakah bersamaan dengan 3/5?", en: "Which of the following is equal to 3/5?" }, a: ["6/15", "9/15", "12/15", "15/15"], c: "9/15" },
+            { q: { ms: "Sebuah kelas mempunyai 36 orang murid. 5/9 daripada mereka menyertai pertandingan matematik. Berapakah bilangan murid yang menyertai pertandingan?", en: "A class has 36 students. 5/9 of them joined a mathematics competition. How many students joined the competition?" }, a: ["18", "20", "22", "24"], c: "20" }
+        ]
+    },
+    perpuluhan: {
+        title: { ms: "Perpuluhan", en: "Decimals" }, 
+        icon: "🟢", 
+        badge: { ms: "🟢 Master Perpuluhan", en: "🟢 Decimals Master" },
+        questions: [
+            { q: { ms: "Apakah nilai tempat bagi digit 7 dalam nombor 45.783?", en: "What is the place value of digit 7 in the number 45.783?" }, a: ["Sa", "Persepuluh", "Perseratus", "Perseribu"], c: "Perseribu" },
+            { q: { ms: "Apakah nilai digit 5 dalam nombor 18.547?", en: "What is the digit value of 5 in the number 18.547?" }, a: ["5", "0.5", "0.05", "0.005"], c: "0.05" },
+            { q: { ms: "Yang manakah nombor perpuluhan paling besar?", en: "Which decimal number is the largest?" }, a: ["8.549", "8.594", "8.495", "8.459"], c: "8.594" },
+            { q: { ms: "Susunan menaik yang betul ialah", en: "The correct ascending order is" }, a: ["2.315, 2.351, 2.513, 2.531", "2.531, 2.513, 2.351, 2.315", "2.351, 2.315, 2.531, 2.513", "2.513, 2.531, 2.315, 2.351"], c: "2.315, 2.351, 2.513, 2.531" },
+            { q: { ms: "Bundarkan 8.476 kepada 2 tempat perpuluhan.", en: "Round off 8.476 to 2 decimal places." }, a: ["8.47", "8.48", "8.49", "8.50"], c: "8.48" },
+            { q: { ms: "Bundarkan 15.684 kepada 1 tempat perpuluhan.", en: "Round off 15.684 to 1 decimal place." }, a: ["15.6", "15.7", "15.8", "16.0"], c: "15.7" },
+            { q: { ms: "5.782 + 3.468 =", en: "5.782 + 3.468 =" }, a: ["9.240", "9.250", "9.260", "9.270"], c: "9.250" },
+            { q: { ms: "12.845 − 5.376 =", en: "12.845 − 5.376 =" }, a: ["7.459", "7.469", "7.479", "7.489"], c: "7.469" },
+            { q: { ms: "4.25 × 8 =", en: "4.25 × 8 =" }, a: ["32.0", "34.0", "36.0", "38.0"], c: "34.0" },
+            { q: { ms: "18.9 ÷ 6 =", en: "18.9 ÷ 6 =" }, a: ["2.95", "3.05", "3.15", "3.25"], c: "3.15" },
+            { q: { ms: "Sebuah reben sepanjang 15.75 m dipotong sebanyak 8.45 m. Berapakah baki panjang reben?", en: "A piece of ribbon 15.75 m long is cut by 8.45 m. What is the remaining length of the ribbon?" }, a: ["7.20 m", "7.30 m", "7.40 m", "7.50 m"], c: "7.30 m" },
+            { q: { ms: "Amir membeli 2.85 kg epal dan 4.65 kg oren. Berapakah jumlah jisim buah-buahan itu?", en: "Amir buys 2.85 kg of apples and 4.65 kg of oranges. What is the total mass of the fruits?" }, a: ["7.40 kg", "7.50 kg", "7.60 kg", "7.70 kg"], c: "7.50 kg" },
+            { q: { ms: "Sebuah tangki mengandungi 25.6 L air. Sebanyak 8.75 L digunakan. Berapakah isipadu air yang tinggal?", en: "A tank contains 25.6 L of water. A total of 8.75 L is used. What is the volume of water left?" }, a: ["16.75 L", "16.85 L", "16.95 L", "17.05 L"], c: "16.85 L" },
+            { q: { ms: "Sebuah lori membawa 3.25 tan pasir. Sebanyak 1.75 tan telah diturunkan. Berapakah baki pasir?", en: "A truck carries 3.25 tonnes of sand. A total of 1.75 tonnes has been unloaded. What is the remaining balance of sand?" }, a: ["1.25 tan", "1.50 tan", "1.75 tan", "2.00 tan"], c: "1.50 tan" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["6.425 + 2.375 = 8.700", "6.425 + 2.375 = 8.800", "6.425 + 2.375 = 8.900", "6.425 + 2.375 = 9.000"], c: "6.425 + 2.375 = 8.800" },
+            { q: { ms: "Lengkapkan pola nombor berikut.\n\n3.25, 3.75, 4.25, _____, 5.25", en: "Complete the following number pattern.\n\n3.25, 3.75, 4.25, _____, 5.25" }, a: ["4.50", "4.65", "4.75", "4.85"], c: "4.75" },
+            { q: { ms: "Yang manakah bersamaan dengan 0.625?", en: "Which one is equal to 0.625?" }, a: ["625/100", "625/1 000", "625/10", "625/10 000"], c: "625/1 000" },
+            { q: { ms: "Antara berikut, yang manakah lebih besar daripada 9.599 tetapi lebih kecil daripada 9.601?", en: "Which of the following is larger than 9.599 but smaller than 9.601?" }, a: ["9.598", "9.600", "9.602", "9.610"], c: "9.600" },
+            { q: { ms: "7.35 × 100 =", en: "7.35 × 100 =" }, a: ["73.5", "735", "7 350", "0.735"], c: "735" },
+            { q: { ms: "Sebuah sekolah menggunakan 125.75 L cat. Kemudian digunakan lagi 34.25 L. Berapakah jumlah cat yang telah digunakan?", en: "A school uses 125.75 L of paint. Then another 34.25 L is used. What is the total volume of paint used?" }, a: ["150.00 L", "155.00 L", "160.00 L", "165.00 L"], c: "160.00 L" }
+        ]
+    },
+    peratus: {
+        title: { ms: "Peratus", en: "Percentage" }, 
+        icon: "💯", 
+        badge: { ms: "💯 Satria Peratus", en: "💯 Percentage Knight" },
+        questions: [
+            { q: { ms: "Tukarkan 35% kepada pecahan termudah.", en: "Convert 35% to its simplest fraction." }, a: ["3/5", "7/20", "7/10", "35/10"], c: "7/20" },
+            { q: { ms: "Tukarkan 12.5% kepada pecahan termudah.", en: "Convert 12.5% to its simplest fraction." }, a: ["1/4", "1/8", "1/10", "1/16"], c: "1/8" },
+            { q: { ms: "Tukarkan 0.72 kepada peratus.", en: "Convert 0.72 to a percentage." }, a: ["7.2%", "72%", "720%", "0.72%"], c: "72%" },
+            { q: { ms: "Tukarkan 125% kepada nombor bercampur.", en: "Convert 125% to a mixed number." }, a: ["1 1/5", "1 1/4", "1 1/2", "2 1/4"], c: "1 1/4" },
+            { q: { ms: "Berapakah 15% daripada 400?", en: "What is 15% of 400?" }, a: ["50", "60", "70", "80"], c: "60" },
+            { q: { ms: "Berapakah 30% daripada 250?", en: "What is 30% of 250?" }, a: ["65", "70", "75", "80"], c: "75" },
+            { q: { ms: "Berapakah 45% daripada 800?", en: "What is 45% of 800?" }, a: ["340", "350", "360", "370"], c: "360" },
+            { q: { ms: "Berapakah 12.5% daripada 160?", en: "What is 12.5% of 160?" }, a: ["18", "20", "22", "24"], c: "20" },
+            { q: { ms: "Sebuah kelas mempunyai 40 orang murid. Jika 60% ialah perempuan, berapakah bilangan murid perempuan?", en: "A class has 40 students. If 60% are girls, what is the number of female students?" }, a: ["22", "23", "24", "25"], c: "24" },
+            { q: { ms: "Sebuah kedai menawarkan diskaun 20% bagi sebuah beg berharga RM180. Berapakah nilai diskaun?", en: "A shop offers a 20% discount on a bag priced at RM180. What is the value of the discount?" }, a: ["RM30", "RM36", "RM40", "RM45"], c: "RM36" },
+            { q: { ms: "Sebuah televisyen berharga RM2 400 diberi diskaun 15%. Berapakah harga selepas diskaun?", en: "A television priced at RM2 400 is given a 15% discount. What is the price after discount?" }, a: ["RM2 020", "RM2 040", "RM2 060", "RM2 080"], c: "RM2 040" },
+            { q: { ms: "Sebuah sekolah mempunyai 1 200 orang murid. Jika 65% hadir ke sekolah, berapakah bilangan murid yang hadir?", en: "A school has 1 200 students. If 65% attend school, what is the number of students present?" }, a: ["760", "770", "780", "790"], c: "780" },
+            { q: { ms: "Sebuah perpustakaan mempunyai 2 000 buah buku. Sebanyak 35% ialah buku rujukan. Berapakah bilangan buku rujukan?", en: "A library has 2 000 books. A total of 35% are reference books. What is the number of reference books?" }, a: ["650", "700", "750", "800"], c: "700" },
+            { q: { ms: "Sebuah tangki mengandungi 600 L air. Sebanyak 25% telah digunakan. Berapakah isipadu air yang digunakan?", en: "A tank contains 600 L of water. A total of 25% has been used. What is the volume of water used?" }, a: ["120 L", "140 L", "150 L", "160 L"], c: "150 L" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["40% daripada 250 = 90", "40% daripada 250 = 100", "40% daripada 250 = 110", "40% daripada 250 = 120"], c: "40% daripada 250 = 100" },
+            { q: { ms: "Tukarkan 0.045 kepada peratus.", en: "Convert 0.045 to a percentage." }, a: ["0.45%", "4.5%", "45%", "450%"], c: "4.5%" },
+            { q: { ms: "Sebuah syarikat menghasilkan 5 000 botol minuman. Sebanyak 8% rosak. Berapakah bilangan botol yang rosak?", en: "A company produces 5 000 beverage bottles. A total of 8% are damaged. What is the number of damaged bottles?" }, a: ["300", "350", "400", "450"], c: "400" },
+            { q: { ms: "Seorang murid memperoleh 72 markah daripada 80 markah. Berapakah peratus markah yang diperoleh?", en: "A student obtained 72 marks out of 80 marks. What is the percentage of marks obtained?" }, a: ["85%", "90%", "92%", "95%"], c: "90%" },
+            { q: { ms: "Sebuah ladang mempunyai 800 pokok mangga. Sebanyak 55% daripada pokok itu berbuah. Berapakah bilangan pokok yang berbuah?", en: "A farm has 800 mango trees. A total of 55% of the trees bear fruit. What is the number of trees bearing fruit?" }, a: ["420", "430", "440", "450"], c: "440" },
+            { q: { ms: "Sebuah kilang mempunyai 2 500 pekerja. Jika 84% hadir bekerja pada hari Isnin, berapakah bilangan pekerja yang hadir?", en: "A factory has 2 500 workers. If 84% attend work on Monday, what is the number of workers present?" }, a: ["2 000", "2 050", "2 100", "2 150"], c: "2 100" }
+        ]
+    },
+  ukuran_sukatan: {
+        title: { ms: "UKURAN & SUKATAN", en: "MEASUREMENT" },
+        icon: "📏",
+        badge: { ms: "📏 Wira Ukuran", en: "📏 Measurement Hero" },
+        questions: [
+            { q: { ms: "Tukarkan 8.5 km kepada meter.", en: "Convert 8.5 km to meters." }, a: ["850 m", "8 050 m", "8 500 m", "85 000 m"], c: "8 500 m" },
+            { q: { ms: "Tukarkan 6 m 45 cm kepada sentimeter.", en: "Convert 6 m 45 cm to centimeters." }, a: ["605 cm", "625 cm", "645 cm", "650 cm"], c: "645 cm" },
+            { q: { ms: "Tukarkan 9 250 m kepada kilometer.", en: "Convert 9 250 m to kilometers." }, a: ["9.025 km", "9.25 km", "9.52 km", "92.5 km"], c: "9.25 km" },
+            { q: { ms: "Sebatang paip panjangnya 15 m 80 cm. Sebanyak 6 m 45 cm dipotong. Berapakah baki panjang paip?", en: "A pipe is 15 m 80 cm long. A length of 6 m 45 cm is cut off. What is the remaining length of the pipe?" }, a: ["9 m 25 cm", "9 m 35 cm", "9 m 45 cm", "9 m 55 cm"], c: "9 m 35 cm" },
+            { q: { ms: "Yang manakah paling panjang?", en: "Which one is the longest?" }, a: ["1 850 m", "1.8 km", "2 km", "1 950 m"], c: "2 km" },
+            { q: { ms: "Tukarkan 3.75 km kepada meter.", en: "Convert 3.75 km to meters." }, a: ["375 m", "3 075 m", "3 750 m", "37 500 m"], c: "3 750 m" },
+            { q: { ms: "Sebuah lori bergerak sejauh 185.5 km pada waktu pagi dan 214.8 km pada waktu petang. Berapakah jumlah jarak yang dilalui?", en: "A lorry travels 185.5 km in the morning and 214.8 km in the afternoon. What is the total distance traveled?" }, a: ["390.3 km", "400.3 km", "410.3 km", "420.3 km"], c: "400.3 km" },
+            { q: { ms: "Seutas tali sepanjang 24 m dipotong kepada 8 bahagian yang sama. Berapakah panjang setiap bahagian?", en: "A piece of rope 24 m long is cut into 8 equal parts. What is the length of each part?" }, a: ["2 m", "3 m", "4 m", "5 m"], c: "3 m" },
+            { q: { ms: "Tukarkan 5 600 mm kepada meter.", en: "Convert 5 600 mm to meters." }, a: ["0.56 m", "5.6 m", "56 m", "560 m"], c: "5.6 m" },
+            { q: { ms: "Berapakah jumlah panjang 7 batang besi, setiap satunya 2.5 m?", en: "What is the total length of 7 iron bars, each 2.5 m long?" }, a: ["16.5 m", "17.0 m", "17.5 m", "18.0 m"], c: "17.5 m" },
+            { q: { ms: "Sebuah trek mempunyai panjang 400 m. Berapakah jumlah jarak yang dilalui selepas 12 pusingan?", en: "A track is 400 m long. What is the total distance covered after 12 laps?" }, a: ["4 400 m", "4 600 m", "4 800 m", "5 000 m"], c: "4 800 m" },
+            { q: { ms: "Tukarkan 12 km 350 m kepada meter.", en: "Convert 12 km 350 m to meters." }, a: ["12 035 m", "12 305 m", "12 350 m", "12 530 m"], c: "12 350 m" },
+            { q: { ms: "Seorang pelari berlari sejauh 6.8 km pada waktu pagi dan 5.7 km pada waktu petang. Berapakah jumlah jarak yang dilalui?", en: "A runner runs 6.8 km in the morning and 5.7 km in the afternoon. What is the total distance covered?" }, a: ["11.5 km", "12.0 km", "12.5 km", "13.0 km"], c: "12.5 km" },
+            { q: { ms: "Sebatang kayu sepanjang 8 m 90 cm dipotong kepada dua bahagian. Bahagian pertama berukuran 3 m 75 cm. Berapakah panjang bahagian kedua?", en: "A piece of wood 8 m 90 cm long is cut into two parts. The first part measures 3 m 75 cm. What is the length of the second part?" }, a: ["5 m 5 cm", "5 m 10 cm", "5 m 15 cm", "5 m 20 cm"], c: "5 m 15 cm" },
+            { q: { ms: "Tukarkan 0.85 km kepada meter.", en: "Convert 0.85 km to meters." }, a: ["85 m", "850 m", "8 500 m", "85 000 m"], c: "850 m" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["2.5 km = 250 m", "2.5 km = 2 500 m", "2.5 km = 25 000 m", "2.5 km = 250 000 m"], c: "2.5 km = 2 500 m" },
+            { q: { ms: "Sebuah jalan raya sepanjang 18 km sedang dibaiki. Sebanyak 7.5 km telah siap dibaiki. Berapakah panjang jalan yang belum dibaiki?", en: "An 18 km road is being repaired. A total of 7.5 km has been repaired. What is the length of the road that is not yet repaired?" }, a: ["9.5 km", "10 km", "10.5 km", "11 km"], c: "10.5 km" },
+            { q: { ms: "Berapakah jumlah panjang 9 utas tali, setiap satunya 1.8 m?", en: "What is the total length of 9 pieces of rope, each 1.8 m long?" }, a: ["15.2 m", "15.8 m", "16.2 m", "16.8 m"], c: "16.2 m" },
+            { q: { ms: "Tukarkan 1 250 cm kepada meter.", en: "Convert 1 250 cm to meters." }, a: ["1.25 m", "12.5 m", "125 m", "1 250 m"], c: "12.5 m" },
+            { q: { ms: "Sebuah bas bergerak sejauh 275 km pada hari Sabtu dan 368 km pada hari Ahad. Berapakah jumlah jarak perjalanan bas itu?", en: "A bus travels 275 km on Saturday and 368 km on Sunday. What is the total distance of the bus journey?" }, a: ["623 km", "633 km", "643 km", "653 km"], c: "643 km" }
+        ]
+    },
+
+    jisim: {
+        title: { ms: "JISIM", en: "MASS" },
+        icon: "⚖️",
+        badge: { ms: "⚖️ Pakar Jisim", en: "⚖️ Mass Expert" },
+        questions: [
+            { q: { ms: "Tukarkan 8.5 kg kepada gram.", en: "Convert 8.5 kg to grams." }, a: ["850 g", "8 050 g", "8 500 g", "85 000 g"], c: "8 500 g" },
+            { q: { ms: "Tukarkan 12 750 g kepada kilogram.", en: "Convert 12 750 g to kilograms." }, a: ["1.275 kg", "12.075 kg", "12.75 kg", "127.5 kg"], c: "12.75 kg" },
+            { q: { ms: "Yang manakah paling berat?", en: "Which one is the heaviest?" }, a: ["950 g", "980 g", "1 kg", "1.2 kg"], c: "1.2 kg" },
+            { q: { ms: "Yang manakah paling ringan?", en: "Which one is the lightest?" }, a: ["0.45 kg", "650 g", "900 g", "1.2 kg"], c: "0.45 kg" },
+            { q: { ms: "Sebungkus beras berjisim 12.5 kg. Ali membeli 8 bungkus. Berapakah jumlah jisim beras?", en: "A bag of rice has a mass of 12.5 kg. Ali buys 8 bags. What is the total mass of the rice?" }, a: ["90 kg", "95 kg", "100 kg", "105 kg"], c: "100 kg" },
+            { q: { ms: "Sebuah kotak berjisim 15 kg 750 g. Sebuah lagi kotak berjisim 8 kg 250 g. Berapakah jumlah jisim kedua-dua kotak?", en: "One box has a mass of 15 kg 750 g. Another box has a mass of 8 kg 250 g. What is the total mass of both boxes?" }, a: ["23 kg", "24 kg", "24 kg 500 g", "25 kg"], c: "24 kg" },
+            { q: { ms: "Sebuah guni baja berjisim 50 kg. Sebanyak 18.5 kg telah digunakan. Berapakah baki baja?", en: "A sack of fertilizer has a mass of 50 kg. A total of 18.5 kg has been used. What is the remaining fertilizer?" }, a: ["30.5 kg", "31.5 kg", "32.5 kg", "33.5 kg"], c: "31.5 kg" },
+            { q: { ms: "Tukarkan 4.25 kg kepada gram.", en: "Convert 4.25 kg to grams." }, a: ["425 g", "4 025 g", "4 250 g", "42 500 g"], c: "4 250 g" },
+            { q: { ms: "Sebiji tembikai berjisim 6.8 kg and sebiji lagi berjisim 5.7 kg. Berapakah jumlah jisim kedua-duanya?", en: "One watermelon has a mass of 6.8 kg and another has a mass of 5.7 kg. What is their total mass?" }, a: ["11.5 kg", "12.0 kg", "12.5 kg", "13.0 kg"], c: "12.5 kg" },
+            { q: { ms: "Tukarkan 18 000 g kepada kilogram.", en: "Convert 18 000 g to kilograms." }, a: ["1.8 kg", "18 kg", "180 kg", "1 800 kg"], c: "18 kg" },
+            { q: { ms: "Sebuah lori membawa 3 tan pasir. Berapakah jisim pasir itu dalam kilogram?", en: "A lorry carries 3 tonnes of sand. What is the mass of the sand in kilograms?" }, a: ["300 kg", "3 000 kg", "30 000 kg", "300 000 kg"], c: "3 000 kg" },
+            { q: { ms: "Sebuah gudang menyimpan 125 guni beras. Setiap guni berjisim 40 kg. Berapakah jumlah jisim semua guni?", en: "A warehouse stores 125 sacks of rice. Each sack has a mass of 40 kg. What is the total mass of all the sacks?" }, a: ["4 000 kg", "4 500 kg", "5 000 kg", "5 500 kg"], c: "5 000 kg" },
+            { q: { ms: "Seorang peniaga mempunyai 250 kg gula. Dia menjual 86 kg. Berapakah baki gula?", en: "A trader has 250 kg of sugar. He sells 86 kg. What is the remaining sugar?" }, a: ["154 kg", "164 kg", "174 kg", "184 kg"], c: "164 kg" },
+            { q: { ms: "Tukarkan 2.75 kg kepada gram.", en: "Convert 2.75 kg to grams." }, a: ["275 g", "2 075 g", "2 750 g", "27 500 g"], c: "2 750 g" },
+            { q: { ms: "Sebuah mesin mengangkat beban seberat 850 kg dan satu lagi beban seberat 650 kg. Berapakah jumlah jisim kedua-dua beban?", en: "A machine lifts a load weighing 850 kg and another load weighing 650 kg. What is the total mass of both loads?" }, a: ["1 300 kg", "1 400 kg", "1 500 kg", "1 600 kg"], c: "1 500 kg" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["1 tan = 100 kg", "1 tan = 1 000 kg", "1 tan = 10 000 kg", "1 tan = 100 000 kg"], c: "1 tan = 1 000 kg" },
+            { q: { ms: "Sebuah lori membawa 5 tan simen. Sebanyak 1 750 kg telah diturunkan. Berapakah baki simen?", en: "A lorry carries 5 tonnes of cement. A total of 1 750 kg has been unloaded. What is the remaining cement?" }, a: ["3 150 kg", "3 250 kg", "3 350 kg", "3 450 kg"], c: "3 250 kg" },
+            { q: { ms: "Sebiji nangka berjisim 12.5 kg. Berapakah jumlah jisim 6 biji nangka?", en: "A jackfruit has a mass of 12.5 kg. What is the total mass of 6 jackfruits?" }, a: ["70 kg", "72 kg", "75 kg", "78 kg"], c: "75 kg" },
+            { q: { ms: "Tukarkan 875 g kepada kilogram.", en: "Convert 875 g to kilograms." }, a: ["0.875 kg", "8.75 kg", "87.5 kg", "875 kg"], c: "0.875 kg" },
+            { q: { ms: "Sebuah gudang mempunyai 425 kg tepung. Kemudian ditambah lagi 275 kg. Berapakah jumlah jisim tepung di dalam gudang?", en: "A warehouse has 425 kg of flour. Then another 275 kg is added. What is the total mass of flour in the warehouse?" }, a: ["650 kg", "675 kg", "700 kg", "725 kg"], c: "700 kg" }
+        ]
+    },
+
+    isi_padu_cecair: {
+        title: { ms: "ISI PADU CECAIR", en: "VOLUME OF LIQUID" },
+        icon: "🧪",
+        badge: { ms: "🧪 Juara Isi Padu", en: "🧪 Volume Champion" },
+        questions: [
+            { q: { ms: "Tukarkan 8.5 L kepada mililiter.", en: "Convert 8.5 L to milliliters." }, a: ["850 mL", "8 050 mL", "8 500 mL", "85 000 mL"], c: "8 500 mL" },
+            { q: { ms: "Tukarkan 12 750 mL kepada liter.", en: "Convert 12 750 mL to liters." }, a: ["1.275 L", "12.075 L", "12.75 L", "127.5 L"], c: "12.75 L" },
+            { q: { ms: "Yang manakah mempunyai isi padu paling besar?", en: "Which one has the largest volume?" }, a: ["950 mL", "1 L", "1.2 L", "1 100 mL"], c: "1.2 L" },
+            { q: { ms: "Yang manakah mempunyai isi padu paling kecil?", en: "Which one has the smallest volume?" }, a: ["0.45 L", "650 mL", "900 mL", "1.2 L"], c: "0.45 L" },
+            { q: { ms: "Sebuah tangki mengandungi 35.5 L air. Sebanyak 12.8 L digunakan. Berapakah isipadu air yang tinggal?", en: "A tank contains 35.5 L of water. A total of 12.8 L is used. What is the remaining volume of water?" }, a: ["21.7 L", "22.7 L", "23.7 L", "24.7 L"], c: "22.7 L" },
+            { q: { ms: "Sebotol minyak masak mengandungi 2.75 L. Berapakah isipadunya dalam mililiter?", en: "A bottle of cooking oil contains 2.75 L. What is its volume in milliliters?" }, a: ["275 mL", "2 075 mL", "2 750 mL", "27 500 mL"], c: "2 750 mL" },
+            { q: { ms: "Sebuah tangki mengandungi 125.5 L air. Ditambah lagi 84.7 L air. Berapakah jumlah isipadu air?", en: "A tank contains 125.5 L of water. Another 84.7 L of water is added. What is the total volume of water?" }, a: ["209.2 L", "210.2 L", "211.2 L", "212.2 L"], c: "210.2 L" },
+            { q: { ms: "Tukarkan 3 250 mL kepada liter.", en: "Convert 3 250 mL to liters." }, a: ["0.325 L", "3.025 L", "3.25 L", "32.5 L"], c: "3.25 L" },
+            { q: { ms: "Sebuah tong mengandungi 48 L jus. Jus itu dibahagikan sama rata ke dalam 12 botol. Berapakah isi padu jus dalam setiap botol?", en: "A barrel contains 48 L of juice. The juice is divided equally into 12 bottles. What is the volume of juice in each bottle?" }, a: ["2 L", "3 L", "4 L", "5 L"], c: "4 L" },
+            { q: { ms: "Tukarkan 6.8 L kepada mililiter.", en: "Convert 6.8 L to milliliters." }, a: ["680 mL", "6 080 mL", "6 800 mL", "68 000 mL"], c: "6 800 mL" },
+            { q: { ms: "Sebuah kolam kecil mengandungi 250 L air. Sebanyak 95.5 L digunakan. Berapakah baki air?", en: "A small pond contains 250 L of water. A total of 95.5 L is used. What is the remaining water?" }, a: ["153.5 L", "154.5 L", "155.5 L", "156.5 L"], c: "154.5 L" },
+            { q: { ms: "Sebotol air mineral mengandungi 1.5 L air. Berapakah jumlah isipadu air dalam 24 botol?", en: "A bottle of mineral water contains 1.5 L of water. What is the total volume of water in 24 bottles?" }, a: ["34 L", "35 L", "36 L", "37 L"], c: "36 L" },
+            { q: { ms: "Sebuah tangki mengandungi 450 L air. Ditambah lagi 275 L air. Berapakah jumlah isipadu air?", en: "A tank contains 450 L of water. Another 275 L of water is added. What is the total volume of water?" }, a: ["705 L", "715 L", "725 L", "735 L"], c: "725 L" },
+            { q: { ms: "Sebuah tangki mengandungi 800 L air. Sebanyak 325 L telah digunakan. Berapakah isipadu air yang tinggal?", en: "A tank contains 800 L of water. A total of 325 L has been used. What is the remaining volume of water?" }, a: ["455 L", "465 L", "475 L", "485 L"], c: "475 L" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["1 L = 100 mL", "1 L = 1 000 mL", "1 L = 10 000 mL", "1 L = 100 000 mL"], c: "1 L = 1 000 mL" },
+            { q: { ms: "Tukarkan 875 mL kepada liter.", en: "Convert 875 mL to liters." }, a: ["0.875 L", "8.75 L", "87.5 L", "875 L"], c: "0.875 L" },
+            { q: { ms: "Sebuah botol mengandungi 2.4 L air. Berapakah jumlah isipadu air dalam 15 botol?", en: "A bottle contains 2.4 L of water. What is the total volume of water in 15 bottles?" }, a: ["34 L", "35 L", "36 L", "37 L"], c: "36 L" },
+            { q: { ms: "Sebuah bekas mengandungi 27 L jus. Jus itu dibahagikan sama rata kepada 9 jag. Berapakah isi padu jus dalam setiap jag?", en: "A container contains 27 L of juice. The juice is divided equally among 9 jugs. What is the volume of juice in each jug?" }, a: ["2 L", "3 L", "4 L", "5 L"], c: "3 L" },
+            { q: { ms: "Tukarkan 15 L 250 mL kepada mililiter.", en: "Convert 15 L 250 mL to milliliters." }, a: ["15 025 mL", "15 205 mL", "15 250 mL", "15 520 mL"], c: "15 250 mL" },
+            { q: { ms: "Sebuah kilang menghasilkan 1 250 L minuman pada waktu pagi dan 875 L pada waktu petang. Berapakah jumlah minuman yang dihasilkan?", en: "A factory produces 1 250 L of drinks in the morning and 875 L in the afternoon. What is the total volume of drinks produced?" }, a: ["2 025 L", "2 075 L", "2 125 L", "2 175 L"], c: "2 125 L" }
+        ]
+    },
+
+    masa_waktu: {
+        title: { ms: "MASA & WAKTU", en: "TIME" },
+        icon: "⏱️",
+        badge: { ms: "⏱️ Kapten Masa", en: "⏱️ Time Captain" },
+        questions: [
+            { q: { ms: "Jam menunjukkan pukul 2:45 petang. Dalam sistem 24 jam, waktu tersebut ialah:", en: "The clock shows 2:45 p.m. In the 24-hour system, the time is:" }, a: ["0245", "1245", "1445", "1645"], c: "1445" },
+            { q: { ms: "Waktu 0730 dalam sistem 12 jam ialah:", en: "The time 0730 in the 12-hour system is:" }, a: ["7:30 malam", "7:30 pagi", "5:30 pagi", "7:03 pagi"], c: "7:30 pagi" },
+            { q: { ms: "Sebuah kelas bermula pada pukul 8:15 pagi dan tamat pada pukul 9:50 pagi. Berapakah tempoh kelas itu?", en: "A class starts at 8:15 a.m. and ends at 9:50 a.m. What is the duration of the class?" }, a: ["1 jam 15 minit", "1 jam 25 minit", "1 jam 35 minit", "1 jam 45 minit"], c: "1 jam 35 minit" },
+            { q: { ms: "Sebuah bas bertolak pada pukul 10:20 pagi. Jika perjalanan mengambil masa 2 jam 45 minit, bas tiba pada pukul:", en: "A bus departs at 10:20 a.m. If the journey takes 2 hours 45 minutes, the bus arrives at:" }, a: ["12:55 tengah hari", "1:05 petang", "1:15 petang", "12:45 tengah hari"], c: "1:05 petang" },
+            { q: { ms: "Jam menunjukkan pukul 9:40 malam. Dalam sistem 24 jam, waktu tersebut ialah:", en: "The clock shows 9:40 p.m. In the 24-hour system, the time is:" }, a: ["0940", "1940", "2140", "2240"], c: "2140" },
+            { q: { ms: "Tempoh dari pukul 1:15 petang hingga 4:00 petang ialah:", en: "The duration from 1:15 p.m. to 4:00 p.m. is:" }, a: ["2 jam 35 minit", "2 jam 45 minit", "3 jam 15 minit", "3 jam 45 minit"], c: "2 jam 45 minit" },
+            { q: { ms: "Waktu 1815 dalam sistem 12 jam ialah:", en: "The time 1815 in the 12-hour system is:" }, a: ["6:15 pagi", "6:15 petang", "8:15 malam", "5:15 petang"], c: "6:15 petang" },
+            { q: { ms: "Sebuah filem bermula pada pukul 7:20 malam dan berlangsung selama 1 jam 50 minit. Filem tamat pada pukul:", en: "A movie starts at 7:20 p.m. and lasts for 1 hour 50 minutes. The movie ends at:" }, a: ["8:50 malam", "9:00 malam", "9:10 malam", "9:20 malam"], c: "9:10 malam" },
+            { q: { ms: "Tempoh dari pukul 11:30 pagi hingga 2:15 petang ialah:", en: "The duration from 11:30 a.m. to 2:15 p.m. is:" }, a: ["2 jam 35 minit", "2 jam 45 minit", "3 jam 15 minit", "3 jam 45 minit"], c: "2 jam 45 minit" },
+            { q: { ms: "Waktu 0000 dalam sistem 12 jam ialah:", en: "The time 0000 in the 12-hour system is:" }, a: ["12:00 tengah hari", "12:00 tengah malam", "1:00 pagi", "11:59 malam"], c: "12:00 tengah malam" },
+            { q: { ms: "Di Malaysia sekarang pukul 3:00 petang. Sebuah negara mempunyai beza masa 2 jam lebih awal daripada Malaysia. Waktu di negara tersebut ialah:", en: "It is now 3:00 p.m. in Malaysia. A country has a time difference of 2 hours earlier than Malaysia. The time in that country is:" }, a: ["4:00 petang", "5:00 petang", "1:00 petang", "6:00 petang"], c: "1:00 petang" },
+            { q: { ms: "Sebuah penerbangan berlepas pada pukul 9:10 pagi dan mengambil masa 3 jam 25 minit. Penerbangan tiba pada pukul:", en: "A flight departs at 9:10 a.m. and takes 3 hours 25 minutes. The flight arrives at:" }, a: ["12:25 tengah hari", "12:35 tengah hari", "12:45 tengah hari", "1:35 petang"], c: "12:35 tengah hari" },
+            { q: { ms: "Tempoh dari pukul 6:45 pagi hingga 8:20 pagi ialah:", en: "The duration from 6:45 a.m. to 8:20 a.m. is:" }, a: ["1 jam 25 minit", "1 jam 35 minit", "1 jam 45 minit", "2 jam 35 minit"], c: "1 jam 35 minit" },
+            { q: { ms: "Waktu 2345 dalam sistem 12 jam ialah:", en: "The time 2345 in the 12-hour system is:" }, a: ["11:45 pagi", "10:45 malam", "11:45 malam", "12:45 tengah malam"], c: "11:45 malam" },
+            { q: { ms: "Sebuah kereta bertolak pada pukul 1:30 petang. Selepas 4 jam 20 minit, kereta itu tiba pada pukul:", en: "A car departs at 1:30 p.m. After 4 hours 20 minutes, the car arrives at:" }, a: ["5:40 petang", "5:50 petang", "6:00 petang", "6:20 petang"], c: "5:50 petang" }
+        ]
+    },
+
+    purata: {
+        title: { ms: "PURATA", en: "AVERAGE" },
+        icon: "📊",
+        badge: { ms: "📊 Master Nisbah", en: "📊 Ratio Master" },
+        questions: [
+            { q: { ms: "Apakah purata bagi nombor 12, 16, 18 dan 14?", en: "What is the average of the numbers 12, 16, 18, and 14?" }, a: ["14", "15", "16", "17"], c: "15" },
+            { q: { ms: "Apakah purata bagi 25, 30, 35, 40 dan 45?", en: "What is the average of 25, 30, 35, 40, and 45?" }, a: ["33", "34", "35", "36"], c: "35" },
+            { q: { ms: "Jumlah markah bagi 5 ujian ialah 400. Berapakah purata markah?", en: "The total marks for 5 tests is 400. What is the average mark?" }, a: ["70", "75", "80", "85"], c: "80" },
+            { q: { ms: "Purata umur 4 orang murid ialah 11 tahun. Berapakah jumlah umur mereka?", en: "The average age of 4 students is 11 years. What is their total age?" }, a: ["33 tahun", "40 tahun", "44 tahun", "48 tahun"], c: "44 tahun" },
+            { q: { ms: "Berat lima kotak ialah 8 kg, 10 kg, 12 kg, 9 kg dan 11 kg. Berapakah purata beratnya?", en: "The weight of five boxes is 8 kg, 10 kg, 12 kg, 9 kg, and 11 kg. What is their average weight?" }, a: ["9 kg", "10 kg", "11 kg", "12 kg"], c: "10 kg" },
+            { q: { ms: "Markah Ali dalam empat ujian ialah 78, 82, 90 dan 86. Berapakah purata markahnya?", en: "Ali's marks in four tests are 78, 82, 90, and 86. What is his average mark?" }, a: ["82", "83", "84", "85"], c: "83" },
+            { q: { ms: "Sebuah bas bergerak sejauh 240 km dalam 4 hari. Jika jarak yang dilalui setiap hari adalah sama, berapakah purata jarak sehari?", en: "A bus travels 240 km in 4 days. If the distance traveled each day is the same, what is the average daily distance?" }, a: ["50 km", "55 km", "60 km", "65 km"], c: "60 km" },
+            { q: { ms: "Seorang peniaga memperoleh keuntungan RM250, RM300, RM350 dan RM500 dalam empat hari. Berapakah purata keuntungan sehari?", en: "A trader makes a profit of RM250, RM300, RM350, and RM500 in four days. What is the average daily profit?" }, a: ["RM330", "RM340", "RM350", "RM360"], c: "RM350" },
+            { q: { ms: "Sebuah keluarga menggunakan 120 L air dalam 6 hari. Berapakah purata penggunaan air sehari?", en: "A family uses 120 L of water in 6 days. What is the average daily water usage?" }, a: ["18 L", "19 L", "20 L", "21 L"], c: "20 L" },
+            { q: { ms: "Purata tinggi 6 orang murid ialah 145 cm. Berapakah jumlah tinggi mereka?", en: "The average height of 6 students is 145 cm. What is their total height?" }, a: ["850 cm", "860 cm", "870 cm", "880 cm"], c: "870 cm" },
+            { q: { ms: "Bilangan buku yang dibaca oleh Amin dalam lima minggu ialah 6, 8, 7, 9 dan 10 buah. Berapakah purata buku yang dibaca setiap minggu?", en: "The number of books read by Amin in five weeks is 6, 8, 7, 9, and 10. What is the average number of books read each week?" }, a: ["7", "8", "9", "10"], c: "8" },
+            { q: { ms: "Purata suhu bagi 7 hari ialah 30°C. Berapakah jumlah suhu bagi tujuh hari itu?", en: "The average temperature for 7 days is 30°C. What is the total temperature for those seven days?" }, a: ["200°C", "205°C", "210°C", "215°C"], c: "210°C" },
+            { q: { ms: "Sebuah lori membawa 2 400 kg barang dalam 8 perjalanan. Berapakah purata berat barang bagi setiap perjalanan?", en: "A lorry carries 2 400 kg of goods in 8 trips. What is the average weight of goods per trip?" }, a: ["250 kg", "280 kg", "300 kg", "320 kg"], c: "300 kg" },
+            { q: { ms: "Lima orang murid mendapat markah 68, 72, 75, 80 dan 85. Berapakah purata markah mereka?", en: "Five students obtain marks of 68, 72, 75, 80, and 85. What is their average mark?" }, a: ["74", "75", "76", "77"], c: "76" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["Purata = Jumlah ÷ Bilangan data", "Purata = Jumlah × Bilangan data", "Purata = Bilangan data ÷ Jumlah", "Purata = Jumlah + Bilangan data"], c: "Purata = Jumlah ÷ Bilangan data" },
+            { q: { ms: "Sebuah kedai menjual 420 botol minuman dalam 7 hari. Berapakah purata jualan sehari?", en: "A shop sells 420 bottles of drinks in 7 days. What is the average daily sales?" }, a: ["50 botol", "55 botol", "60 botol", "65 botol"], c: "60 botol" },
+            { q: { ms: "Purata umur 8 orang pemain ialah 14 tahun. Berapakah jumlah umur mereka?", en: "The average age of 8 players is 14 years. What is their total age?" }, a: ["102 tahun", "108 tahun", "112 tahun", "118 tahun"], c: "112 tahun" },
+            { q: { ms: "Bilangan penumpang bas selama empat hari ialah 48, 52, 50 dan 54 orang. Berapakah purata penumpang sehari?", en: "The number of bus passengers over four days is 48, 52, 50, and 54 people. What is the average number of passengers daily?" }, a: ["49 orang", "50 orang", "51 orang", "52 orang"], c: "51 orang" },
+            { q: { ms: "Sebuah ladang menghasilkan 1 800 kg sayur dalam 6 minggu. Berapakah purata hasil seminggu?", en: "A farm produces 1 800 kg of vegetables in 6 weeks. What is the average weekly yield?" }, a: ["250 kg", "275 kg", "300 kg", "325 kg"], c: "300 kg" },
+            { q: { ms: "Markah Farah dalam lima ujian ialah 88, 92, 84, 90 dan 86. Berapakah purata markahnya?", en: "Farah's marks in five tests are 88, 92, 84, 90, and 86. What is her average mark?" }, a: ["86", "87", "88", "89"], c: "87" }
+        ]
+     },         
+        
+        wang: {
+        title: { ms: "Wang", en: "Money" }, 
+        icon: "💰", 
+        badge: { ms: "💰 Jutawan Math", en: "💰 Math Millionaire" },
+        questions: [
+            { q: { ms: "RM35.80 + RM48.25 =", en: "RM35.80 + RM48.25 =" }, a: ["RM82.05", "RM83.05", "RM84.05", "RM85.05"], c: "RM84.05" },
+            { q: { ms: "RM250.00 − RM89.75 =", en: "RM250.00 − RM89.75 =" }, a: ["RM159.25", "RM160.25", "RM161.25", "RM162.25"], c: "RM160.25" },
+            { q: { ms: "Sebuah buku berharga RM18.50. Berapakah harga bagi 8 buah buku?", en: "A book costs RM18.50. What is the price of 8 books?" }, a: ["RM138.00", "RM148.00", "RM158.00", "RM168.00"], c: "RM148.00" },
+            { q: { ms: "RM576.00 dibahagikan sama rata kepada 9 orang. Setiap orang menerima", en: "RM576.00 is divided equally among 9 people. Each person receives" }, a: ["RM62.00", "RM63.00", "RM64.00", "RM65.00"], c: "RM64.00" },
+            { q: { ms: "Harga sebuah beg ialah RM125.90. Jika Ali membayar dengan RM200.00, berapakah baki wangnya?", en: "The price of a bag is RM125.90. If Ali pays with RM200.00, what is his remaining balance of money?" }, a: ["RM73.10", "RM74.10", "RM75.10", "RM76.10"], c: "RM74.10" },
+            { q: { ms: "Harga sebuah televisyen berharga RM2 450 diberi diskaun 20%. Berapakah harga selepas diskaun?", en: "A television priced at RM2 450 is given a 20% discount. What is the price after discount?" }, a: ["RM1 940", "RM1 950", "RM1 960", "RM1 970"], c: "RM1 960" },
+            { q: { ms: "Sebuah komputer riba berharga RM3 200. Cukai jualan sebanyak 6% dikenakan. Berapakah jumlah yang perlu dibayar?", en: "A laptop costs RM3 200. A sales tax of 6% is imposed. What is the total amount to be paid?" }, a: ["RM3 372", "RM3 382", "RM3 392", "RM3 402"], c: "RM3 392" },
+            { q: { ms: "Seorang peniaga membeli 15 kotak biskut dengan harga RM24.50 setiap kotak. Berapakah jumlah bayaran?", en: "A merchant buys 15 boxes of biscuits at RM24.50 per box. What is the total payment?" }, a: ["RM357.50", "RM367.50", "RM377.50", "RM387.50"], c: "RM367.50" },
+            { q: { ms: "Siti mempunyai RM350.00. Dia membeli sepasang kasut berharga RM128.90 dan sehelai baju berharga RM75.50. Berapakah baki wangnya?", en: "Siti has RM350.00. She buys a pair of shoes costing RM128.90 and a shirt costing RM75.50. What is her remaining balance of money?" }, a: ["RM144.60", "RM145.60", "RM146.60", "RM147.60"], c: "RM145.60" },
+            { q: { ms: "Harga sebuah basikal ialah RM850.00. Jika dibayar secara ansuran selama 10 bulan, berapakah bayaran setiap bulan?", en: "The price of a bicycle is RM850.00. If paid in instalments for 10 months, what is the monthly payment?" }, a: ["RM80", "RM82", "RM85", "RM90"], c: "RM85" },
+            { q: { ms: "Sebuah restoran memperoleh RM2 850.50 pada waktu makan tengah hari dan RM3 475.80 pada waktu makan malam. Berapakah jumlah hasil jualan?", en: "A restaurant earned RM2 850.50 during lunch and RM3 475.80 during dinner. What is the total sales revenue?" }, a: ["RM6 316.30", "RM6 326.30", "RM6 336.30", "RM6 346.30"], c: "RM6 326.30" },
+            { q: { ms: "Harga sebuah jam tangan ialah RM480.00. Selepas diskaun 15%, harga jam ialah", en: "The price of a watch is RM480.00. After a 15% discount, the price of the watch is" }, a: ["RM398.00", "RM408.00", "RM418.00", "RM428.00"], c: "RM408.00" },
+            { q: { ms: "Seorang pelanggan membeli 6 botol minyak masak berharga RM32.80 setiap satu. Berapakah jumlah bayaran?", en: "A customer buys 6 bottles of cooking oil costing RM32.80 each. What is the total payment?" }, a: ["RM186.80", "RM196.80", "RM206.80", "RM216.80"], c: "RM196.80" },
+            { q: { ms: "RM1 250.00 dibahagikan sama rata kepada 5 orang adik-beradik. Setiap seorang menerima", en: "RM1 250.00 is divided equally among 5 siblings. Each person receives" }, a: ["RM200", "RM225", "RM250", "RM275"], c: "RM250" },
+            { q: { ms: "Pilih ayat matematik yang betul.", en: "Choose the correct number sentence." }, a: ["RM85.40 + RM24.60 = RM100.00", "RM85.40 + RM24.60 = RM110.00", "RM85.40 + RM24.60 = RM120.00", "RM85.40 + RM24.60 = RM130.00"], c: "RM110.00" },
+            { q: { ms: "Sebuah kedai menjual 25 kotak air mineral pada harga RM18.40 sekotak. Berapakah jumlah hasil jualan?", en: "A shop sells 25 boxes of mineral water at RM18.40 per box. What is the total sales revenue?" }, a: ["RM440.00", "RM450.00", "RM460.00", "RM470.00"], c: "RM460.00" },
+            { q: { ms: "Harga sebuah peti sejuk ialah RM2 800. Pembeli membayar deposit RM500. Berapakah baki yang perlu dibayar?", en: "The price of a refrigerator is RM2 800. The buyer pays a deposit of RM500. What is the remaining balance to be paid?" }, a: ["RM2 100", "RM2 200", "RM2 300", "RM2 400"], c: "RM2 300" },
+            { q: { ms: "Sebuah keluarga membelanjakan RM685.40 untuk barangan dapur dan RM248.75 untuk pakaian. Berapakah jumlah perbelanjaan mereka?", en: "A family spends RM685.40 on groceries and RM248.75 on clothes. What is their total expenditure?" }, a: ["RM924.15", "RM934.15", "RM944.15", "RM954.15"], c: "RM934.15" },
+            { q: { ms: "Seorang peniaga membeli 40 helai tuala pada harga RM12.50 sehelai. Berapakah jumlah kos pembelian?", en: "A merchant buys 40 towels at RM12.50 each. What is the total cost of purchase?" }, a: ["RM450", "RM475", "RM500", "RM525"], c: "RM500" },
+            { q: { ms: "Sebuah mesin fotostat berharga RM5 800. Selepas diskaun 10%, harga yang perlu dibayar ialah", en: "A photocopier machine costs RM5 800. After a 10% discount, the price to be paid is" }, a: ["RM5 120", "RM5 220", "RM5 320", "RM5 420"], c: "RM5 220" }
+        ]
+    }
+};
 
         // --- SISTEM AUDIO SINTETIK ---
         const AudioFX = {
@@ -707,8 +827,92 @@
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.btn-bounce')) { AudioFX.play('pop'); }
             });
+            
+            // Ambil tetapan bahasa terdahulu jika ada
+            const savedLang = localStorage.getItem('bijak_math_lang');
+            if (savedLang) { currentLang = savedLang; }
+            
             loadLocalData();
+            applyLanguageUI();
         };
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'ms') ? 'en' : 'ms';
+            localStorage.setItem('bijak_math_lang', currentLang);
+            applyLanguageUI();
+            
+            // Kemas kini komponen dinamik yang sedang dipaparkan
+            buildMainMenuTopics();
+            renderBadges();
+            if (!document.getElementById('viewTopicIntro').classList.contains('hidden')) {
+                selectTopic(quizState.currentTopicId);
+            }
+            if (!document.getElementById('viewQuiz').classList.contains('hidden')) {
+                // Sentiasa kemas kini teks soalan mengikut bahasa semasa kuiz berlangsung
+                const topic = BANK_SOALAN[quizState.currentTopicId];
+                const totalQuestions = topic.questions.length;
+                const currentQuestion = topic.questions[quizState.currentQuestionIndex];
+                document.getElementById('quizProgressText').innerText = `${I18N_DICTIONARY[currentLang].quizProgressText} ${quizState.currentQuestionIndex + 1} / ${totalQuestions}`;
+                document.getElementById('quizScoreText').innerText = `${I18N_DICTIONARY[currentLang].quizScoreText}: ${quizState.score}`;
+                document.getElementById('questionTextPrimary').innerHTML = typeof currentQuestion.q === 'object' ? currentQuestion.q[currentLang] : currentQuestion.q;
+            }
+            if (!document.getElementById('viewRecords').classList.contains('hidden')) {
+                openPerformanceRecords();
+            }
+        }
+
+        function applyLanguageUI() {
+            const currentI18N = I18N_DICTIONARY[currentLang];
+            
+            // Kemas kini teks statik dalam HTML
+            document.getElementById('welcomeTitle').innerHTML = currentI18N.welcomeTitle;
+            document.getElementById('welcomeMascot').innerText = currentI18N.welcomeMascot;
+            document.getElementById('btnWelcomeStart').innerText = currentI18N.btnWelcomeStart;
+            
+            document.getElementById('profileTitle').innerText = currentI18N.profileTitle;
+            document.getElementById('profileDesc').innerText = currentI18N.profileDesc;
+            document.getElementById('profileLabel').innerText = currentI18N.profileLabel;
+            document.getElementById('usernameInput').placeholder = currentI18N.usernameInputPlaceholder;
+            document.getElementById('btnSaveProfile').innerText = currentI18N.btnSaveProfile;
+            document.getElementById('existingProfilesTitle').innerText = currentI18N.existingProfilesTitle;
+            
+            document.getElementById('mainMenuTitle').innerText = currentI18N.mainMenuTitle;
+            document.getElementById('mainMenuDesc').innerText = currentI18N.mainMenuDesc;
+            document.getElementById('btnPerformanceRecords').innerText = currentI18N.btnPerformanceRecords;
+            document.getElementById('badgeHeading').innerText = currentI18N.badgeHeading;
+            
+            document.getElementById('btnIntroBack').innerText = currentI18N.btnIntroBack;
+            document.getElementById('btnIntroStart').innerText = currentI18N.btnIntroStart;
+            document.getElementById('topicIntroHint').innerText = currentI18N.topicIntroHint;
+            
+            document.getElementById('btnExitQuiz').innerText = currentI18N.btnExitQuiz;
+            
+            document.getElementById('resLblCorrect').innerText = currentI18N.resLblCorrect;
+            document.getElementById('resLblWrong').innerText = currentI18N.resLblWrong;
+            document.getElementById('resLblStars').innerText = currentI18N.resLblStars;
+            document.getElementById('btnResultRetry').innerText = currentI18N.btnResultRetry;
+            document.getElementById('btnResultBack').innerText = currentI18N.btnResultBack;
+            
+            document.getElementById('recordsTitle').innerText = currentI18N.recordsTitle;
+            document.getElementById('recordsDesc').innerText = currentI18N.recordsDesc;
+            document.getElementById('btnClearRecords').innerText = currentI18N.btnClearRecords;
+            document.getElementById('btnRecordsMainMenu').innerText = currentI18N.btnRecordsMainMenu;
+            
+            document.getElementById('settingsTitle').innerText = currentI18N.settingsTitle;
+            document.getElementById('settingsSound').innerText = currentI18N.settingsSound;
+            document.getElementById('settingsReset').innerText = currentI18N.settingsReset;
+            document.getElementById('settingsDelete').innerText = currentI18N.settingsDelete;
+            document.getElementById('settingsBranding').innerHTML = currentI18N.brandingText;
+            
+            document.getElementById('footerText').innerText = currentI18N.footerText;
+            
+            // Kemas kini teks pada butang penukaran bahasa
+            const btnText = currentLang === 'ms' ? '🌐 EN' : '🌐 MY';
+            document.getElementById('btnLangToggle').innerText = btnText;
+            document.getElementById('btnWelcomeLangToggle').innerText = btnText;
+
+            updateSoundButtonUI();
+        }
 
         function navigateTo(viewId) {
             ['viewWelcome', 'viewProfile', 'viewMainMenu', 'viewTopicIntro', 'viewQuiz', 'viewResult', 'viewRecords'].forEach(id => {
@@ -787,7 +991,7 @@
         function saveProfile() {
             const input = document.getElementById('usernameInput');
             const name = input.value.trim().toUpperCase();
-            if (!name) { alert("Sila masukkan namamu terlebih dahulu! 😊"); return; }
+            if (!name) { alert(I18N_DICTIONARY[currentLang].alertNameEmpty); return; }
             
             if (!allProfiles[name]) {
                 allProfiles[name] = { name: name, stars: 0, badges: [], records: [] };
@@ -834,7 +1038,9 @@
                 card.className = `btn-bounce bg-gradient-to-br ${colorClass} p-4 rounded-2xl shadow-md text-left flex flex-col justify-between h-32 border-b-4 border-black/10 cursor-pointer transform hover:scale-[1.02] transition-transform`;
                 card.onclick = () => selectTopic(key);
                 
-                card.innerHTML = `<div class="text-3xl">${topic.icon}</div><div><div class="font-black text-sm leading-tight uppercase">${topic.title}</div><div class="text-[10px] opacity-90 font-bold mt-1">${topic.questions.length} Soalan</div></div>`;
+                const titleText = typeof topic.title === 'object' ? topic.title[currentLang] : topic.title;
+                
+                card.innerHTML = `<div class="text-3xl">${topic.icon}</div><div><div class="font-black text-sm leading-tight uppercase">${titleText}</div><div class="text-[10px] opacity-90 font-bold mt-1">${topic.questions.length} ${I18N_DICTIONARY[currentLang].questionsUnit}</div></div>`;
                 grid.appendChild(card);
             });
         }
@@ -843,7 +1049,7 @@
             const container = document.getElementById('badgesContainer');
             container.innerHTML = '';
             if (userProfile.badges.length === 0) {
-                container.innerHTML = `<span class="text-xs text-slate-400 italic">Selesaikan topik dengan markah 100% untuk kumpul lencana!</span>`;
+                container.innerHTML = `<span class="text-xs text-slate-400 italic">${I18N_DICTIONARY[currentLang].badgeEmpty}</span>`;
                 return;
             }
             userProfile.badges.forEach(badgeText => {
@@ -857,10 +1063,11 @@
         function selectTopic(topicId) {
             quizState.currentTopicId = topicId;
             const topic = BANK_SOALAN[topicId];
+            const titleText = typeof topic.title === 'object' ? topic.title[currentLang] : topic.title;
             
             document.getElementById('topicIntroIcon').innerText = topic.icon;
-            document.getElementById('topicIntroTitle').innerText = topic.title;
-            document.getElementById('topicIntroDetails').innerText = `${topic.questions.length} Soalan Latih Tubi`;
+            document.getElementById('topicIntroTitle').innerText = titleText;
+            document.getElementById('topicIntroDetails').innerText = `${topic.questions.length} ${I18N_DICTIONARY[currentLang].topicIntroDetailsSuffix}`;
             navigateTo('viewTopicIntro');
         }
 
@@ -873,7 +1080,7 @@
         }
 
         function confirmExitQuiz() {
-            if (confirm("Adakah anda pasti mahu berhenti menjawab dan kembali ke Menu Utama?")) {
+            if (confirm(I18N_DICTIONARY[currentLang].alertExitQuiz)) {
                 navigateTo('viewMainMenu');
             }
         }
@@ -889,22 +1096,36 @@
                 return;
             }
 
-            document.getElementById('quizProgressText').innerText = `Soalan ${quizState.currentQuestionIndex + 1} / ${totalQuestions}`;
-            document.getElementById('quizScoreText').innerText = `Markah: ${quizState.score}`;
+            document.getElementById('quizProgressText').innerText = `${I18N_DICTIONARY[currentLang].quizProgressText} ${quizState.currentQuestionIndex + 1} / ${totalQuestions}`;
+            document.getElementById('quizScoreText').innerText = `${I18N_DICTIONARY[currentLang].quizScoreText}: ${quizState.score}`;
             
             const pct = ((quizState.currentQuestionIndex) / totalQuestions) * 100;
             document.getElementById('quizProgressBar').style.width = `${pct}%`;
 
             const currentQuestion = topic.questions[quizState.currentQuestionIndex];
-            document.getElementById('questionTextPrimary').innerHTML = currentQuestion.q;
+            
+            // Sokong soalan dwi bahasa
+            const questionString = typeof currentQuestion.q === 'object' ? currentQuestion.q[currentLang] : currentQuestion.q;
+            document.getElementById('questionTextPrimary').innerHTML = questionString;
 
             const optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '';
             
-            currentQuestion.a.forEach((option) => {
+            // Sokong pilihan jawapan dwi bahasa jika berjenis objek
+            let rawOptions = currentQuestion.a;
+            if (typeof rawOptions === 'object' && !Array.isArray(rawOptions)) {
+                rawOptions = rawOptions[currentLang];
+            }
+            
+            let correctAnswer = currentQuestion.c;
+            if (typeof correctAnswer === 'object') {
+                correctAnswer = correctAnswer[currentLang];
+            }
+
+            rawOptions.forEach((option) => {
                 const btn = document.createElement('button');
                 btn.className = "w-full text-left bg-white text-slate-700 font-bold p-4 rounded-xl border-2 border-slate-200/80 shadow-sm hover:border-blue-400 transition-colors btn-bounce cursor-pointer flex justify-between items-center text-base";
-                btn.onclick = () => checkAnswer(btn, option, currentQuestion.c);
+                btn.onclick = () => checkAnswer(btn, option, correctAnswer);
                 btn.innerHTML = `<span>${option}</span><span class='opt-status text-lg'></span>`;
                 optionsContainer.appendChild(btn);
             });
@@ -931,6 +1152,7 @@
                 quizState.wrongCount++;
                 quizState.lives--;
 
+                // Paparkan simbol mentol pada jawapan yang betul sahaja apabila pengguna menjawab salah
                 for (let btn of buttons) {
                     if (btn.innerText.trim().startsWith(correctValue)) {
                         btn.classList.remove('bg-white', 'border-slate-200/80');
@@ -949,33 +1171,38 @@
         function endQuiz() {
             const topic = BANK_SOALAN[quizState.currentTopicId];
             const finalPercent = Math.round((quizState.correctCount / topic.questions.length) * 100);
+            const currentI18N = I18N_DICTIONARY[currentLang];
+            
+            const badgeText = typeof topic.badge === 'object' ? topic.badge[currentLang] : topic.badge;
 
             if (finalPercent === 100) {
                 quizState.starsEarned = 3;
-                document.getElementById('resultTitle').innerText = "Sempurna 100%!";
+                document.getElementById('resultTitle').innerText = currentI18N.resultTitleSuccess;
                 document.getElementById('resultEmoji').innerText = "🏆";
                 AudioFX.play('victory');
                 triggerConfetti();
                 
-                if (!userProfile.badges.includes(topic.badge)) {
-                    userProfile.badges.push(topic.badge);
+                if (!userProfile.badges.includes(badgeText)) {
+                    userProfile.badges.push(badgeText);
                 }
             } else if (finalPercent >= 50) {
                 quizState.starsEarned = 2;
-                document.getElementById('resultTitle').innerText = "Tahniah! Selesai!";
+                document.getElementById('resultTitle').innerText = currentI18N.resultTitleNormal;
                 document.getElementById('resultEmoji').innerText = "🎉";
                 AudioFX.play('victory');
             } else {
                 quizState.starsEarned = 0;
-                document.getElementById('resultTitle').innerText = "Cuba Lagi!";
+                document.getElementById('resultTitle').innerText = currentI18N.resultTitleFail;
                 document.getElementById('resultEmoji').innerText = "💪";
             }
 
             userProfile.stars += quizState.starsEarned;
             
             const timestamp = new Date().toLocaleString();
+            const topicTitleMapped = typeof topic.title === 'object' ? topic.title : { ms: topic.title, en: topic.title };
+            
             const record = {
-                topicTitle: topic.title,
+                topicTitle: topicTitleMapped, // simpan struktur bahasa objek untuk dipetakan nanti
                 score: finalPercent,
                 correct: quizState.correctCount,
                 total: topic.questions.length,
@@ -1006,22 +1233,28 @@
             container.innerHTML = '';
 
             if (performanceRecords.length === 0) {
-                container.innerHTML = `<div class="text-center py-8 text-slate-400 font-medium text-sm">Belum ada rekod jawapan. Sila pilih topik dan selesaikan kuiz dahulu!</div>`;
+                container.innerHTML = `<div class="text-center py-8 text-slate-400 font-medium text-sm">${I18N_DICTIONARY[currentLang].recordsEmpty}</div>`;
                 return;
             }
 
             performanceRecords.forEach(rec => {
                 const item = document.createElement('div');
                 item.className = "bg-slate-50 p-3 rounded-xl border border-slate-100 flex justify-between items-center text-xs";
+                
+                // Urus pemetaan nama tajuk mengikut bahasa semasa
+                let displayTitle = rec.topicTitle;
+                if (typeof displayTitle === 'object') {
+                    displayTitle = displayTitle[currentLang] || displayTitle['ms'];
+                }
 
                 item.innerHTML = `
                     <div>
-                        <div class="font-black text-slate-700 text-sm uppercase">${rec.topicTitle}</div>
+                        <div class="font-black text-slate-700 text-sm uppercase">${displayTitle}</div>
                         <div class="text-slate-400 font-bold mt-0.5">${rec.time}</div>
                     </div>
                     <div class="text-right">
                         <div class="text-base font-black ${rec.score === 100 ? 'text-emerald-500' : rec.score >= 50 ? 'text-blue-500' : 'text-orange-500'}">${rec.score}%</div>
-                        <div class="text-[10px] text-slate-400 font-bold">Betul: ${rec.correct}/${rec.total}</div>
+                        <div class="text-[10px] text-slate-400 font-bold">${I18N_DICTIONARY[currentLang].recordsScoreLabel}: ${rec.correct}/${rec.total}</div>
                     </div>
                 `;
                 container.appendChild(item);
@@ -1029,7 +1262,7 @@
         }
 
         function clearPerformanceRecords() {
-            if (confirm("Adakah anda pasti mahu memadam semua sejarah rekod prestasi ini?")) {
+            if (confirm(I18N_DICTIONARY[currentLang].alertClearRecords)) {
                 performanceRecords = [];
                 userProfile.records = [];
                 allProfiles[userProfile.name] = userProfile;
@@ -1050,17 +1283,18 @@
         function updateSoundButtonUI() {
             const btn = document.getElementById('btnSoundToggle');
             if(!btn) return;
+            const currentI18N = I18N_DICTIONARY[currentLang];
             if (AudioFX.enabled) {
-                btn.innerText = "HIDUP";
+                btn.innerText = currentI18N.settingsSoundOn;
                 btn.className = "px-4 py-2 bg-green-500 text-white font-bold rounded-lg text-xs tracking-wide uppercase shadow btn-bounce cursor-pointer";
             } else {
-                btn.innerText = "MATI";
+                btn.innerText = currentI18N.settingsSoundOff;
                 btn.className = "px-4 py-2 bg-slate-400 text-white font-bold rounded-lg text-xs tracking-wide uppercase shadow btn-bounce cursor-pointer";
             }
         }
 
         function resetProgress() {
-            if (confirm("Adakah anda pasti mahu mengosongkan semua kutipan lencana, bintang dan rekod prestasi kembali ke 0?")) {
+            if (confirm(I18N_DICTIONARY[currentLang].alertResetProgress)) {
                 userProfile.stars = 0;
                 userProfile.badges = [];
                 userProfile.records = [];
@@ -1070,12 +1304,12 @@
                 closeSettings();
                 buildMainMenuTopics();
                 renderBadges();
-                updateHeaderUI(); 
+                updateHeaderUI();
             }
         }
 
         function logoutProfile() {
-            if (confirm("Adakah anda pasti mahu log keluar? Profil anda tidak akan dipadam dan anda boleh log masuk semula pada bila-bila masa.")) {
+            if (confirm(I18N_DICTIONARY[currentLang].alertLogoutProfile)) {
                 localStorage.removeItem('bijak_math_active_profile_v2');
                 closeSettings();
                 navigateTo('viewWelcome');
