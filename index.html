@@ -3048,6 +3048,7 @@ function openBook(book, button) {
   renderPage();
   reader.showModal();
   document.body.classList.add('reading');
+  speakStory();
 }
 
 function turnPage(step, withSound = false) {
@@ -3082,6 +3083,7 @@ function turnPage(step, withSound = false) {
 
   page = target;
   renderPage();
+  speakStory();
 }
 
 get('prev').addEventListener('click', () => turnPage(-1));
