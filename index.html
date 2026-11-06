@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#fff7e7">
 <meta name="description" content="KiddyReads is a digital library of 50 illustrated English storybooks for little readers.">
 <title>KiddyReads | Little Stories, Big Adventures</title>
@@ -10,6 +10,9 @@
 <style>
 :root{--ink:#24233a;--cream:#fff7e7;--paper:#fffdfa;--coral:#fb796f;--yellow:#ffda72;--mint:#bceee1;--purple:#754ab1;--muted:#62596f;--round:ui-rounded,"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif}
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body,button,label,input,.cover,.story-word{touch-action:manipulation}
+input,select,textarea{font-size:16px}
 body{margin:0;color:var(--ink);font:500 1rem/1.5 var(--round);background-color:var(--cream);background-image:radial-gradient(circle at 5px 5px,#77cbc0 1.5px,transparent 2px),radial-gradient(circle at 21px 23px,#f4bf63 1.5px,transparent 2px),radial-gradient(circle at 41px 36px,#f5b1ad 1.3px,transparent 1.8px);background-size:53px 50px}
 button,input{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -69,19 +72,21 @@ h2{font-size:clamp(1.85rem,4vw,2.65rem);letter-spacing:-.065em;line-height:1.08;
 .foot{text-align:center;padding:32px 0 25px;color:var(--muted);font-size:.79rem;font-weight:750}
 .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 body.reading{overflow:hidden}
-dialog{padding:0;border:3px solid var(--ink);border-radius:24px;background:var(--cream);color:var(--ink);width:min(680px,calc(100% - 28px));max-width:none;max-height:calc(100dvh - 28px);box-shadow:0 6px var(--ink)}
+dialog{padding:0;margin:0;inset:0;border:0;border-radius:0;background:var(--cream);color:var(--ink);width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;box-shadow:none}
 dialog[open]{display:flex;flex-direction:column}
 dialog::backdrop{background:#29203db8}
+.reader-header{padding-top:max(10px,env(safe-area-inset-top))}
+.reader-footer{padding-bottom:max(10px,env(safe-area-inset-bottom))}
 .reader-header,.reader-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 15px;background:var(--paper);flex:none}
 .reader-header{border-bottom:2px solid var(--ink)}
 .reader-header h2{font-size:clamp(1.04rem,4vw,1.5rem);letter-spacing:-.04em}
 .reader-footer{border-top:2px solid var(--ink)}
-.reader-body{overflow:auto;overscroll-behavior:contain;padding:13px 15px;touch-action:pan-y pinch-zoom}
-.reader-content{max-width:500px;margin:auto;display:grid;justify-items:center;gap:9px}
+.reader-body{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:13px 15px;touch-action:pan-y}
+.reader-content{max-width:760px;margin:auto;display:grid;justify-items:center;gap:9px}
 .story-stage{width:100%;display:grid;position:relative;perspective:1050px}
 .story-page{display:grid;justify-items:center;gap:9px}
 .turning-page{position:absolute;top:0;left:0;width:100%;z-index:1;pointer-events:none;background:var(--cream);border-radius:18px;backface-visibility:hidden;box-shadow:0 5px 16px #24233a24}
-.story-image{display:block;width:auto;max-width:100%;height:min(430px,calc(100dvh - 295px));min-height:min(180px,45vw);aspect-ratio:1;object-fit:contain;border:2px solid var(--ink);border-radius:18px;background:#fffdfa}
+.story-image{display:block;width:auto;max-width:100%;height:clamp(180px,calc(100dvh - 310px),680px);min-height:min(180px,45vw);aspect-ratio:1;object-fit:contain;border:2px solid var(--ink);border-radius:18px;background:#fffdfa}
 .story-text{width:100%;background:white;border:2px solid var(--ink);border-radius:14px;padding:10px 15px;text-align:center;font-size:clamp(1.1rem,3.4vw,1.62rem);line-height:1.28;margin:0}
 .story-word{display:inline-block;border:0;padding:0;border-radius:4px;background:none;line-height:inherit;text-decoration:underline dotted #9c80ba;text-underline-offset:.17em}
 .story-word[data-emphasis]{color:#a62934;font-weight:900}
@@ -108,7 +113,7 @@ h1{font-size:clamp(3rem,12vw,4.5rem);margin:9px 0 10px}.eyebrow{font-size:.63rem
 .shelf{margin-top:28px}.shelf-head{align-items:center;gap:5px;margin-bottom:12px}.kicker{font-size:.63rem}.progress-card{grid-template-columns:auto minmax(77px,1fr);padding:6px 7px;gap:0 6px;font-size:.69rem}.progress-star{width:23px;height:23px}.track{height:6px}
 .controls{flex-direction:column-reverse;align-items:stretch;gap:10px}.search{width:100%}.filters{gap:6px}.pill{padding:3px 11px;min-height:36px;font-size:.81rem}
 .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 11px}.card{border-radius:16px}.cover{aspect-ratio:1}.card-info{padding:8px 4px 5px;gap:4px}.book-number,.read-badge{top:6px}.book-number{left:6px;padding:5px}.read-badge{right:6px;font-size:.67rem;padding:5px 6px}
-.reader-header,.reader-footer{padding:8px}.reader-body{padding:9px}
+.reader-header,.reader-footer{padding:8px}.reader-header{padding-top:max(8px,env(safe-area-inset-top))}.reader-footer{padding-bottom:max(8px,env(safe-area-inset-bottom))}.reader-body{padding:9px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 </style>
@@ -3012,7 +3017,9 @@ function updateReaderCheck() {
   readerCheck.checked = done;
   get('reader-check-label').textContent = done ? 'Finished' : 'Mark as finished';
   const note = get('finish-note');
-  note.hidden = page !== activeBook.pages.length - 1;
+  const isLast = page === activeBook.pages.length - 1;
+  readerCheck.closest('label').hidden = !isLast;
+  note.hidden = !isLast;
   note.textContent = done ? 'The end! Great reading!' : 'The end! Tick the box when you’ve finished reading.';
 }
 
