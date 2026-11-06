@@ -2792,12 +2792,18 @@ function setReading(reading) {
   get('read-aloud-text').textContent = reading ? 'Stop Reading' : 'Read Aloud';
 }
 
+const player = canSpeak ? new window.Audio() : null;
+if (player) { player.preload = 'auto'; player.setAttribute('playsinline', ''); }
+let playToken = 0;
+let autoplayBlocked = false;
+
 function stopSpeech() {
   cancelAnimationFrame(highlightFrame);
+  playToken++;
   if (activeAudio) {
-    const audio = activeAudio;
     activeAudio = null;
-    audio.pause();
+    player.onplaying = player.onended = player.onerror = null;
+    player.pause();
   }
   highlightWord(null);
   setReading(false);
@@ -2807,9 +2813,12 @@ function speakStory(word = null) {
   if (!canSpeak || !activeBook) return;
   stopSpeech();
   clearNarrationError();
+  autoplayBlocked = false;
   const pageRecording = recordings.books[activeBook.id]?.[page];
   const asset = word ? recordings.words[word.key] : pageRecording?.[0];
-  const timings = pageRecording?.[1];
+  const timings = pageRecording?.[1] || [];
+  const token = playToken;
+  const isCurrent = () => token === playToken;
 
   function reportError() {
     stopSpeech();
@@ -2821,13 +2830,14 @@ function speakStory(word = null) {
     return;
   }
 
-  const audio = new window.Audio('data:audio/mpeg;base64,' + asset);
+  const audio = player;
+  audio.src = 'data:audio/mpeg;base64,' + asset;
   activeAudio = audio;
   setReading(!word);
   let currentIndex = -1;
 
   function syncHighlight() {
-    if (activeAudio !== audio || audio.paused) return;
+    if (!isCurrent() || audio.paused) return;
     const milliseconds = audio.currentTime * 1000;
     let index = currentIndex;
     while (index + 1 < timings.length && timings[index + 1] <= milliseconds) index++;
@@ -2839,17 +2849,31 @@ function speakStory(word = null) {
   }
 
   audio.onplaying = () => {
-    if (activeAudio !== audio) return;
+    if (!isCurrent()) return;
     if (word) highlightWord(word.button);
     else {
       cancelAnimationFrame(highlightFrame);
       syncHighlight();
     }
   };
-  audio.onended = () => { if (activeAudio === audio) stopSpeech(); };
-  audio.onerror = () => { if (activeAudio === audio) reportError(); };
-  audio.play().catch(() => { if (activeAudio === audio) reportError(); });
+  audio.onended = () => { if (isCurrent()) stopSpeech(); };
+  audio.onerror = () => { if (isCurrent()) reportError(); };
+  const attempt = audio.play();
+  if (attempt && attempt.catch) attempt.catch(error => {
+    if (!isCurrent()) return;
+    if (error && error.name === 'NotAllowedError') {
+      // The browser blocked automatic sound: start on the next tap anywhere.
+      stopSpeech();
+      autoplayBlocked = true;
+      narrationNote.textContent = 'Tap anywhere to hear the story.';
+    } else reportError();
+  });
 }
+
+reader.addEventListener('pointerdown', event => {
+  if (!autoplayBlocked || event.target.closest('button, label, input')) return;
+  speakStory();
+});
 
 readAloud.addEventListener('click', () => {
   if (readAloud.getAttribute('aria-pressed') === 'true') stopSpeech();
