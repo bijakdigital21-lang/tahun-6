@@ -196,8 +196,8 @@ h1{font-size:clamp(3rem,12vw,4.5rem);margin:9px 0 10px}.eyebrow{font-size:.63rem
 <button type="button" id="next" class="nav-button next"><span id="next-text">Next</span><svg class="icon" aria-hidden="true"><use href="#i-right"/></svg></button>
 </footer>
 </dialog>
-<script src="./catalog.js"></script>
-<script src="./words.js"></script>
+<script src="./catalog.js?v=ana48-20261107"></script>
+<script src="./words.js?v=ana48-20261107"></script>
 <script>
 'use strict';
 const get = id => document.getElementById(id);
@@ -437,7 +437,7 @@ function loadBookMedia(book) {
   if (!bookLoads.has(book.id)) {
     const request = new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = './book-' + bookNumber(book) + '.js';
+      script.src = './book-' + bookNumber(book) + '.js?v=ana48-20261107';
       script.onload = () => {
         script.remove();
         if (KiddyReadsBookMedia[book.id]) resolve();
